@@ -139,7 +139,7 @@
 "MULTISIG" = "マルチシグネチャ";
 "MULTISIG_REMOVE_COUNT_ERROR" = "あなたは一つの取引につき、一人の連署人だけを取り除くことが出来ます。";
 "MULTISIG_COSIGNATORIES_COUNT_ERROR" = "署名者が多すぎます。";
-"MULTISIG_CHANGES_CONFIRMATION" = "ご確認ください。これには%@ XEMの費用がかかります。また、最小の署名者人数を変更するには、6XENの費用が必要です。"; // %@ will be replaced by the transaction fee
+"MULTISIG_CHANGES_CONFIRMATION" = "ご確認ください。これには%@ XEMの費用がかかります。また、最小の署名者人数を変更するには、6XEMの費用が必要です。"; // %@ will be replaced by the transaction fee
 "MINUTES_SHORT" = "分";
 "MIN_COSIG_PLACEHOLDER" = "最小の署名者をセット: %@　にセットする"; // %@ will be replaced by min csig value
 "MIN_COSIG_PLACEHOLDER_CHANGED" = "最小の署名者を: %@　に変更する"; // %@ will be replaced by min cosig value
