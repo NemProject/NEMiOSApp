@@ -101,7 +101,7 @@ class InvoiceAccountInfoViewController: UIViewController {
     @IBAction func copyAccountAddress(_ sender: AnyObject) {
         
         let pasteBoard: UIPasteboard = UIPasteboard.general
-        pasteBoard.string = account.address
+        pasteBoard.string = account.address.nemAddressNormalised()
     }
     
     @IBAction func shareAccountAddress(_ sender: UIButton) {
