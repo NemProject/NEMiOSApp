@@ -102,6 +102,8 @@ class InvoiceAccountInfoViewController: UIViewController {
         
         let pasteBoard: UIPasteboard = UIPasteboard.general
         pasteBoard.string = account.address
+
+        showAlertCopied()
     }
     
     @IBAction func shareAccountAddress(_ sender: UIButton) {
@@ -116,6 +118,8 @@ class InvoiceAccountInfoViewController: UIViewController {
         guard accountQRCodeImageView.image != nil else { return }
         
         UIImageWriteToSavedPhotosAlbum(accountQRCodeImageView.image!, nil, nil, nil)
+
+        showAlertSaved()
     }
     
     @IBAction func shareAccountQRCodeImage(_ sender: UIButton) {

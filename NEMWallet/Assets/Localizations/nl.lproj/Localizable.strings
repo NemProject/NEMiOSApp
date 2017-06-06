@@ -26,6 +26,7 @@
 "ADDRESS_BOOK" = "Addres Boek";
 "ADD_CONTACT" = "Contact Toevoegen";
 "ADDRESS" = "Addres";
+"ADDRESS_COPIED" = "Address copied.";
 "AMOUNT" = "Bedrag";
 "ACCOUNTS" = "Accounts";
 "ACCOUNT_NOT_ENOUGHT_MONEY" = "Onvoldoende Kapitaal";
@@ -200,6 +201,7 @@
 // MARK: - Q
 
 "QR" = "QR";
+"QR_SAVED" = "QR code is saved.";
 
 // MARK: - R
 

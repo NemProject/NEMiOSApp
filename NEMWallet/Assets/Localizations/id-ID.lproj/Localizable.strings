@@ -26,6 +26,7 @@
 "ADDRESS_BOOK" = "Buku alamat";
 "ADD_CONTACT" = "Tambah kontak";
 "ADDRESS" = "Alamat";
+"ADDRESS_COPIED" = "Address copied.";
 "AMOUNT" = "Jumlah";
 "ACCOUNTS" = "Akun";
 "ACCOUNT_NOT_ENOUGHT_MONEY" = "Saldo tidak cukup";
@@ -200,6 +201,7 @@
 // MARK: - Q
 
 "QR" = "QR";
+"QR_SAVED" = "QR code is saved.";
 
 // MARK: - R
 

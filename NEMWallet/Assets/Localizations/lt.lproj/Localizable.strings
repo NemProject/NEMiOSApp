@@ -26,6 +26,7 @@
 "ADDRESS_BOOK" = "Adresų knyga";
 "ADD_CONTACT" = "Pridėti kontaktą";
 "ADDRESS" = "Adresas";
+"ADDRESS_COPIED" = "Address copied.";
 "AMOUNT" = "Suma";
 "ACCOUNTS" = "Sąskaitos";
 "ACCOUNT_NOT_ENOUGHT_MONEY" = "Nepakanka lėšų";
@@ -200,6 +201,7 @@
 // MARK: - Q
 
 "QR" = "QR";
+"QR_SAVED" = "QR code is saved.";
 
 // MARK: - R
 

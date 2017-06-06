@@ -26,6 +26,7 @@
 "ADDRESS_BOOK" = "Osoitekirja";
 "ADD_CONTACT" = "Lisää kontakti";
 "ADDRESS" = "Osoite ";
+"ADDRESS_COPIED" = "Address copied.";
 "AMOUNT" = "Summa";
 "ACCOUNTS" = "Tilit";
 "ACCOUNT_NOT_ENOUGHT_MONEY" = "Tilin kate ylitetty";
@@ -200,6 +201,7 @@
 // MARK: - Q
 
 "QR" = "QR";
+"QR_SAVED" = "QR code is saved.";
 
 // MARK: - R
 

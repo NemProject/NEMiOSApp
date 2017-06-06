@@ -26,6 +26,7 @@
 "ADDRESS_BOOK" = "アドレス帳";
 "ADD_CONTACT" = "コンタクトを追加";
 "ADDRESS" = "アドレス";
+"ADDRESS_COPIED" = "コピーしました。";
 "AMOUNT" = "数量";
 "ACCOUNTS" = "アカウント";
 "ACCOUNT_NOT_ENOUGHT_MONEY" = "不足金";
@@ -200,6 +201,7 @@
 // MARK: - Q
 
 "QR" = "QR";
+"QR_SAVED" = "保存しました。";
 
 // MARK: - R
 

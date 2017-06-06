@@ -26,6 +26,7 @@
 "ADDRESS_BOOK" = "주소록";
 "ADD_CONTACT" = "연락처 추가";
 "ADDRESS" = "주소";
+"ADDRESS_COPIED" = "Address copied.";
 "AMOUNT" = "금액";
 "ACCOUNTS" = "계정";
 "ACCOUNT_NOT_ENOUGHT_MONEY" = "잔액이 부족합니다.";
@@ -201,6 +202,7 @@
 // MARK: - Q
 
 "QR" = "QR";
+"QR_SAVED" = "QR code is saved.";
 
 // MARK: - R
 

@@ -26,6 +26,7 @@
 "ADDRESS_BOOK" = "Address Book";
 "ADD_CONTACT" = "Add Contact";
 "ADDRESS" = "Address";
+"ADDRESS_COPIED" = "Address copied.";
 "AMOUNT" = "Amount";
 "ACCOUNTS" = "Accounts";
 "ACCOUNT_NOT_ENOUGHT_MONEY" = "Insufficient Funds";
@@ -200,6 +201,7 @@
 // MARK: - Q
 
 "QR" = "QR";
+"QR_SAVED" = "QR code is saved.";
 
 // MARK: - R
 

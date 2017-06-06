@@ -26,6 +26,7 @@
 "ADDRESS_BOOK" = "地址簿";
 "ADD_CONTACT" = "添加联系人";
 "ADDRESS" = "地址";
+"ADDRESS_COPIED" = "Address copied.";
 "AMOUNT" = "总额";
 "ACCOUNTS" = "账户";
 "ACCOUNT_NOT_ENOUGHT_MONEY" = "资金不足";
@@ -200,6 +201,7 @@
 // MARK: - Q
 
 "QR" = "二维码";
+"QR_SAVED" = "QR code is saved.";
 
 // MARK: - R
 

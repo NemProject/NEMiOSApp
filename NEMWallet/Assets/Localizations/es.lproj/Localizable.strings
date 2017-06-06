@@ -26,6 +26,7 @@
 "ADDRESS_BOOK" = "Directorio";
 "ADD_CONTACT" = "Agregar contacto";
 "ADDRESS" = "Dirección";
+"ADDRESS_COPIED" = "Address copied.";
 "AMOUNT" = "Cantidad";
 "ACCOUNTS" = "Cuentas";
 "ACCOUNT_NOT_ENOUGHT_MONEY" = "Fondos insuficientes";
@@ -200,6 +201,7 @@
 // MARK: - Q
 
 "QR" = "QR";
+"QR_SAVED" = "QR code is saved.";
 
 // MARK: - R
 
