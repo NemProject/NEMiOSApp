@@ -30,6 +30,6 @@ public func == (lhs: TransferTransaction, rhs: TransferTransaction) -> Bool {
 extension TransferTransaction: CustomStringConvertible {
     
     public var description: String {
-        return "NemIOSClient.TransferTransaction(type: \(type), timeStamp: \(timeStamp), metaData: \(metaData), amount: \(amount), fee: \(fee), transferType: \(transferType), recipient: \(recipient), message: \(message), deadline: \(deadline), signature: \(signature), signer: \(signer))"
+        return "NemIOSClient.TransferTransaction(type: \(type), timeStamp: \(timeStamp), metaData: \(metaData), amount: \(amount), fee: \(fee), transferType: \(transferType), recipient: \(recipient), message: \(String(describing: message)), deadline: \(deadline), signature: \(signature), signer: \(signer))"
     }
 }

@@ -245,7 +245,7 @@ class TransactionOverviewViewController: UIViewController {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     
                     let json = JSON(data: response.data)
                     var accountData = try json.mapObject(AccountData.self)
@@ -305,7 +305,7 @@ class TransactionOverviewViewController: UIViewController {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     
                     let json = JSON(data: response.data)
                     var allTransactions = [Transaction]()
@@ -389,7 +389,7 @@ class TransactionOverviewViewController: UIViewController {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     
                     let json = JSON(data: response.data)
                     var unconfirmedTransactions = [Transaction]()

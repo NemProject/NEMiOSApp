@@ -107,7 +107,7 @@ class SettingsAddServerViewController: UITableViewController {
         let port = portTextField.text!
         
         do {
-            try SettingsManager.sharedInstance.validateServerExistence(forServerWithAddress: address)
+            let _ = try SettingsManager.sharedInstance.validateServerExistence(forServerWithAddress: address)
             
             SettingsManager.sharedInstance.create(server: address, withProtocolType: protocolType, andPort: port, completion: { [unowned self] (result) in
                 

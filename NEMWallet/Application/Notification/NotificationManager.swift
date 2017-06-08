@@ -220,7 +220,7 @@ open class NotificationManager {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     
                     DispatchQueue.main.async {
                         
@@ -262,7 +262,7 @@ open class NotificationManager {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     
                     let json = JSON(data: response.data)
                     var allTransactions = [Transaction]()
@@ -341,7 +341,7 @@ open class NotificationManager {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     
                     let json = JSON(data: response.data)
                     var allTransactions = [Transaction]()

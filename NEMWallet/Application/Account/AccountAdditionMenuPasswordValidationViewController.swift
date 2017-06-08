@@ -76,7 +76,7 @@ class AccountAdditionMenuPasswordValidationViewController: UIViewController {
         guard let accountPrivateKey = HashManager.AES256Decrypt(inputText: accountEncryptedPrivateKey, key: passwordHash!.toHexString())?.nemKeyNormalized() else { throw AccountImportValidation.wrongPasswordProvided }
                                 
         do {
-            try AccountManager.sharedInstance.validateAccountExistence(forAccountWithPrivateKey: accountPrivateKey)
+            let _ = try AccountManager.sharedInstance.validateAccountExistence(forAccountWithPrivateKey: accountPrivateKey)
             self.accountPrivateKey = accountPrivateKey
             
             return true
@@ -93,7 +93,7 @@ class AccountAdditionMenuPasswordValidationViewController: UIViewController {
         passwordTextField.endEditing(true)
         
         do {
-            try verifyPassword()
+            let _ = try verifyPassword()
             
             AccountManager.sharedInstance.create(account: accountTitle, withPrivateKey: accountPrivateKey, completion: { [unowned self] (result) in
                 

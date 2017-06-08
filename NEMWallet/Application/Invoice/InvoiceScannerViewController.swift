@@ -155,7 +155,7 @@ extension InvoiceScannerViewController: QRCodeScannerDelegate {
         let captureResultJSON = JSON(data: encodedCaptureResult)
         
         do {
-            try validate(captureResult: captureResultJSON)
+            let _ = try validate(captureResult: captureResultJSON)
             
             switch captureResultJSON[QRKeys.DataType.rawValue].intValue {
             case QRType.userData.rawValue:

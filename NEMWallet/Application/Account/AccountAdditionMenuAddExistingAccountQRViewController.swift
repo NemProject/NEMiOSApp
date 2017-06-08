@@ -119,7 +119,7 @@ extension AccountAdditionMenuAddExistingAccountQRViewController: QRCodeScannerDe
         let captureResultJSON = JSON(data: encodedCaptureResult)
         
         do {
-            try validate(captureResult: captureResultJSON)
+            let _ = try validate(captureResult: captureResultJSON)
             
         } catch AccountImportValidation.versionNotMatching {
             

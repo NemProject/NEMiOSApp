@@ -115,6 +115,6 @@ extension String {
     }
     
     func localized(_ defaultValue: String? = nil) -> String {
-        return NSLocalizedString(self, comment: defaultValue ?? self) ?? self
+        return NSLocalizedString(self, comment: defaultValue ?? self) 
     }
 }

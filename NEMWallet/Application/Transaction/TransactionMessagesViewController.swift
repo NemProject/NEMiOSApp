@@ -281,7 +281,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     
                     let json = JSON(data: response.data)
                     var accountData = try json.mapObject(AccountData.self)
@@ -335,7 +335,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     
                     let json = JSON(data: response.data)
                     let accountData = try json.mapObject(AccountData.self)
@@ -383,7 +383,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     
                     let json = JSON(data: response.data)
                     var allTransactions = [Transaction]()
@@ -459,7 +459,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     
                     let json = JSON(data: response.data)
                     var unconfirmedTransactions = [Transaction]()
@@ -534,7 +534,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     let responseJSON = JSON(data: response.data)
                     try self?.validateAnnounceTransactionResult(responseJSON)
                     

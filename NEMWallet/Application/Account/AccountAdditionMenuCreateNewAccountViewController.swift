@@ -64,7 +64,7 @@ class AccountAdditionMenuCreateNewAccountViewController: UIViewController {
     fileprivate func createAccount(withTitle title: String) {
         
         do {
-            try validate(enteredInformation: title)
+            let _ = try validate(enteredInformation: title)
             
             AccountManager.sharedInstance.create(account: title, completion: { [unowned self] (result) in
                                 

@@ -185,7 +185,7 @@ class AccountListViewController: UIViewController {
             }
         }))
         
-        accountTitleChangerAlert.addTextField { [unowned self] (textField) in
+        accountTitleChangerAlert.addTextField { (textField) in
             textField.text = account.title
         }
         

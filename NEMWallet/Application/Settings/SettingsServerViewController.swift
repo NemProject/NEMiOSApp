@@ -215,7 +215,7 @@ class SettingsServerViewController: UIViewController {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     
                     DispatchQueue.main.async {
                         

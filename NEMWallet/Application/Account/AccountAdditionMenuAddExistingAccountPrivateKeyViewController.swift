@@ -97,7 +97,7 @@ class AccountAdditionMenuAddExistingAccountPrivateKeyViewController: UIViewContr
         guard let accountPrivateKeyNormalized = accountPrivateKey.nemKeyNormalized() else { throw AccountImportValidation.invalidPrivateKey }
         
         do {
-            try AccountManager.sharedInstance.validateAccountExistence(forAccountWithPrivateKey: accountPrivateKeyNormalized)
+            let _ = try AccountManager.sharedInstance.validateAccountExistence(forAccountWithPrivateKey: accountPrivateKeyNormalized)
             
             self.accountTitle = accountTitle
             self.accountPrivateKey = accountPrivateKeyNormalized
@@ -114,7 +114,7 @@ class AccountAdditionMenuAddExistingAccountPrivateKeyViewController: UIViewContr
     @IBAction func importAccount(_ sender: UIButton) {
         
         do {
-            try validateEntries()
+            let _ = try validateEntries()
             
             AccountManager.sharedInstance.create(account: accountTitle, withPrivateKey: accountPrivateKey, completion: { [unowned self] (result) in
                 

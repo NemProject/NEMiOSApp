@@ -47,7 +47,7 @@ open class TimeManager {
             case let .success(response):
                 
                 do {
-                    try response.filterSuccessfulStatusCodes()
+                    let _ = try response.filterSuccessfulStatusCodes()
                     let responseJSON = JSON(data: response.data)
                     
                     DispatchQueue.main.async {
