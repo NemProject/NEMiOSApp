@@ -60,6 +60,7 @@
 "CANCEL" = "Abbrechen";
 "CONTACTS_IS_UNAVAILABLE" = "Kein Zugriff auf Kontakte.\nUm den Zugriff zu erlauben, gehen Sie in die Einstellungen -> Datenschutz -> Kontakte.";
 "COPIED" = "Kopieren";
+"CANNOT_ACCESS_CONTACTS" = "Couldn't access contacts, please allow access to contacts.";
 
 // MARK: - D
 

@@ -60,6 +60,7 @@
 "CANCEL" = "Batal";
 "CONTACTS_IS_UNAVAILABLE" = "Kontak tidak tersedia.\nUntuk mengizinkan kontak tolong ke \nPengaturan -> Privasi -> kontak.";
 "COPIED" = "Tersalin";
+"CANNOT_ACCESS_CONTACTS" = "Couldn't access contacts, please allow access to contacts.";
 
 // MARK: - D
 

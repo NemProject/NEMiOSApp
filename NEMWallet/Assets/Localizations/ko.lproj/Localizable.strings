@@ -60,6 +60,7 @@
 "CANCEL" = "취소";
 "CONTACTS_IS_UNAVAILABLE" = "연락처을 이용하려면 연락처 접근이 필요합니다.\n단말기의 [설정>개인정보보호>연락처]에서 연락처 접근을 허용해 주세요.";
 "COPIED" = "복사되었습니다.";
+"CANNOT_ACCESS_CONTACTS" = "Couldn't access contacts, please allow access to contacts.";
 
 // MARK: - D
 

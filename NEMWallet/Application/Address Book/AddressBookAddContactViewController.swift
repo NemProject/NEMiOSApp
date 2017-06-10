@@ -109,7 +109,9 @@ class AddressBookAddContactViewController: UITableViewController {
                 
             case .failure:
                 
-                self?.showAlert(withMessage: "Couldn't create contact")
+                self?.showAlert(withMessage: "CANNOT_ACCESS_CONTACTS".localized(), completion: { () in
+                    UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
+                })
             }
         }
     }

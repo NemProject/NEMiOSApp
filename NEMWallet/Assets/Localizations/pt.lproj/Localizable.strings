@@ -60,7 +60,8 @@
 "CANCEL" = "Cancelar";
 "CONTACTS_IS_UNAVAILABLE" = "Os contatos não estão disponíveis.\nPara permitir a utilização dos contatos, por favor, vá em: \nOpções -> Privacidade -> Contatos.";
 "COPIED" = "Copiado";
-
+"CANNOT_ACCESS_CONTACTS" = "Couldn't access contacts, please allow access to contacts.";
+ｓ
 // MARK: - D
 
 "DONE" = "Feito!";

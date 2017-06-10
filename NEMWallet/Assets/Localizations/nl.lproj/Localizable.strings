@@ -60,6 +60,7 @@
 "CANCEL" = "Annuleer";
 "CONTACTS_IS_UNAVAILABLE" = "Contacten niet beschikbaar.\nOm te activeren, ga naar \n Instellingen -> Privacy -> Contacten.";
 "COPIED" = "Gekopieerd";
+"CANNOT_ACCESS_CONTACTS" = "Couldn't access contacts, please allow access to contacts.";
 
 // MARK: - D
 

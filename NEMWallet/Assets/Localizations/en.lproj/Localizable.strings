@@ -60,6 +60,7 @@
 "CANCEL" = "Cancel";
 "CONTACTS_IS_UNAVAILABLE" = "Contacts are unavailable.\nTo allow contacts please go to \nSettings -> Privacy -> Contacts.";
 "COPIED" = "Copied";
+"CANNOT_ACCESS_CONTACTS" = "Couldn't access contacts, please allow access to contacts.";
 
 // MARK: - D
 

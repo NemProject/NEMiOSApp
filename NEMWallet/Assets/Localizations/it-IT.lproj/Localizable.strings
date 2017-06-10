@@ -60,6 +60,7 @@
 "CANCEL" = "Annulla";
 "CONTACTS_IS_UNAVAILABLE" = "Rubrica disabilitata.\nPer abilitare la rubrica vai su \nImpostazioni -> Privacy -> Rubrica.";
 "COPIED" = "Copiato";
+"CANNOT_ACCESS_CONTACTS" = "Couldn't access contacts, please allow access to contacts.";
 
 // MARK: - D
 

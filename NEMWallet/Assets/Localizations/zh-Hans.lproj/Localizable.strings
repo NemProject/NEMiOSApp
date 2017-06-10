@@ -60,6 +60,7 @@
 "CANCEL" = "退出";
 "CONTACTS_IS_UNAVAILABLE" = "联系人无效。\n若允许联系人请跳转到\n设置->隐私->联系人。";
 "COPIED" = "已复制";
+"CANNOT_ACCESS_CONTACTS" = "Couldn't access contacts, please allow access to contacts.";
 
 // MARK: - D
 

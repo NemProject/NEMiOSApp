@@ -60,6 +60,7 @@
 "CANCEL" = "Poništi";
 "CONTACTS_IS_UNAVAILABLE" = "Kontakti su nedostupni.\nZa dopuštanje kontakata molim vas idite na \nPostavke -> Privatnost -> Kontakti.";
 "COPIED" = "Kopirano";
+"CANNOT_ACCESS_CONTACTS" = "Couldn't access contacts, please allow access to contacts.";
 
 // MARK: - D
 

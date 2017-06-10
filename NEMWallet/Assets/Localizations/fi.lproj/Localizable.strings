@@ -60,6 +60,7 @@
 "CANCEL" = "Peruuta";
 "CONTACTS_IS_UNAVAILABLE" = "Yhteystiedot ei käytössä.\nOta yhteystiedot käyttöön \nAsetukset -> Yksityisyys -> Yhteystiedot.";
 "COPIED" = "Kopioitu";
+"CANNOT_ACCESS_CONTACTS" = "Couldn't access contacts, please allow access to contacts.";
 
 // MARK: - D
 
