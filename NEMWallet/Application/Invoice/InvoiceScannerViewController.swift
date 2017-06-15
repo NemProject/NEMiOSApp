@@ -56,7 +56,7 @@ class InvoiceScannerViewController: UIViewController {
             let destinationViewController = segue.destination as! TransactionSendViewController
             let invoiceJsonData = sender as! JSON
             destinationViewController.recipientAddress = invoiceJsonData["addr"].stringValue
-            destinationViewController.amount = Double(invoiceJsonData["amount"].intValue / 1000000)
+            destinationViewController.amount = Double(invoiceJsonData["amount"].intValue) / Double(1000000)
             destinationViewController.message = invoiceJsonData["msg"].stringValue
 
         default:
