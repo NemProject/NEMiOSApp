@@ -8,7 +8,7 @@
 import UIKit
 
 /// The view controller that lets the user create and scan invoices.
-class InvoiceViewController: UIViewController {
+final class InvoiceViewController: UIViewController {
     
     // MARK: - View Controller Outlets
 

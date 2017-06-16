@@ -34,7 +34,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     the current account or the accounts the current account is a 
     cosignatory of.
  */
-class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
+final class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
     
     // MARK: - View Controller Properties
     

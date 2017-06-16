@@ -8,7 +8,7 @@
 import UIKit
 
 /// The table view cell that represents a block.
-class HarvestingBlockTableViewCell: UITableViewCell {
+final class HarvestingBlockTableViewCell: UITableViewCell {
     
     // MARK: - Cell Properties
     

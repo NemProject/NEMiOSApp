@@ -12,7 +12,7 @@ protocol AccountChooserDelegate {
 }
 
 /// The view controller that lets the user choose from different listed accounts.
-class AccountChooserViewController: UIViewController {
+final class AccountChooserViewController: UIViewController {
     
     // MARK: - View Controller Properties
     

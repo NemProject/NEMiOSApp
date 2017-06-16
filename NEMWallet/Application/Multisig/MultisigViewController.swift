@@ -29,7 +29,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 /// The view controller that lets the user manage multisig for the account.
-class MultisigViewController: UIViewController {
+final class MultisigViewController: UIViewController {
     
     // MARK: - View Controller Properties
     

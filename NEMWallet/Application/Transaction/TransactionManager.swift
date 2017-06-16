@@ -32,7 +32,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     in relationship with a transaction. Use this managers available methods
     instead of writing your own logic.
  */
-open class TransactionManager {
+final class TransactionManager {
     
     // MARK: - Manager Properties
     

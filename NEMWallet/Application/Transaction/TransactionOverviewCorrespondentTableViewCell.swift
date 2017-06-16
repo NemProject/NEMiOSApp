@@ -11,7 +11,7 @@ import UIKit
     The table view cell that represents a correspondent in the
     transaction overview table view controller.
  */
-class TransactionOverviewCorrespondentTableViewCell: UITableViewCell {
+final class TransactionOverviewCorrespondentTableViewCell: UITableViewCell {
     
     // MARK: - Cell Properties
     

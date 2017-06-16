@@ -14,7 +14,7 @@ import Contacts
     in relationship with an account. Use this managers available methods
     instead of writing your own logic.
  */
-open class InvoiceManager {
+final class InvoiceManager {
     
     // MARK: - Manager Properties
     

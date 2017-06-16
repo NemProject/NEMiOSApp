@@ -8,7 +8,7 @@
 import UIKit
 
 /// The view controller that lets the user set a prefix, postfix and default message for new transactions.
-class SettingsInvoiceMessageViewController: UITableViewController {
+final class SettingsInvoiceMessageViewController: UITableViewController {
     
     // MARK: - View Controller Outlets
     

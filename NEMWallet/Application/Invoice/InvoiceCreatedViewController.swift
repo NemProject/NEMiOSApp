@@ -11,7 +11,7 @@ import UIKit
     The view controller that shows the newly created invoice and lets
     the user share that invoice.
  */
-class InvoiceCreatedViewController: UIViewController {
+final class InvoiceCreatedViewController: UIViewController {
     
     // MARK: - View Controller Properties
     

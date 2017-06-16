@@ -11,7 +11,7 @@ import UIKit
     The view controller that lets the user look up information
     about his account and also share that information with others.
  */
-class InvoiceAccountInfoViewController: UIViewController {
+final class InvoiceAccountInfoViewController: UIViewController {
     
     // MARK: - View Controller Properties
     

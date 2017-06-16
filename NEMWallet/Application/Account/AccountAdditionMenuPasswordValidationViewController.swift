@@ -13,7 +13,7 @@ import UIKit
     to the account list once the user provided password was verified
     successfully.
  */
-class AccountAdditionMenuPasswordValidationViewController: UIViewController {
+final class AccountAdditionMenuPasswordValidationViewController: UIViewController {
     
     // MARK: - View Controller Properties
     

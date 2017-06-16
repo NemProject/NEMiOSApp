@@ -9,7 +9,7 @@ import UIKit
 import SwiftyJSON
 
 /// The view controller that lets the user choose a password which will get used to encrypt the backup.
-class AccountExportPasswordViewController: UIViewController {
+final class AccountExportPasswordViewController: UIViewController {
     
     // MARK: - View Controller Properties
     

@@ -13,7 +13,7 @@ import Contacts
     relationship with the address book or a contact. Use this managers available 
     methods instead of writing your own logic.
  */
-open class AddressBookManager {
+final class AddressBookManager {
     
     // MARK: - Manager Properties
 

@@ -8,7 +8,7 @@
 import UIKit
 
 /// The table view cell that represents an account.
-class AccountTableViewCell: UITableViewCell {
+final class AccountTableViewCell: UITableViewCell {
     
     // MARK: - Cell Properties
     

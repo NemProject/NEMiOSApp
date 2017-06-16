@@ -13,7 +13,7 @@ import UIKit
     the account list view controller. This tab bar controller lets
     the user choose from different specific informations to show.
  */
-class AccountDetailTabBarController: UITabBarController {
+final class AccountDetailTabBarController: UITabBarController {
     
     // MARK: - Tab Bar Controller Lifecycle
     

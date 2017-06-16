@@ -15,7 +15,7 @@ enum MessageCellType {
 }
 
 /// Represents a message/transaction with a correspondent in the transaction messages view controller.
-class TransactionMessageTableViewCell: DetailedTableViewCell {
+final class TransactionMessageTableViewCell: DetailedTableViewCell {
 
     // MARK: - Cell Properties
     

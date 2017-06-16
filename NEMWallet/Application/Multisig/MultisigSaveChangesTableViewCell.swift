@@ -8,7 +8,7 @@
 import UIKit
 
 /// Represents the button that lets the user save multisig changes.
-class MultisigSaveChangesTableViewCell: UITableViewCell {
+final class MultisigSaveChangesTableViewCell: UITableViewCell {
     
     // MARK: - Cell Outlets
     

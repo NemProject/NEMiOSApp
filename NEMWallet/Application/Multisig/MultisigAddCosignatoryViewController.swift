@@ -8,7 +8,7 @@
 import UIKit
 
 /// The view controller that lets the user add a new multisig cosigner.
-class MultisigAddCosignatoryViewController: UIViewController {
+final class MultisigAddCosignatoryViewController: UIViewController {
     
     // MARK: - View Controller Properties
     

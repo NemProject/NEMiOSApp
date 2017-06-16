@@ -11,7 +11,7 @@ import UIKit
     The table view cell that is getting used to show an option 
     in a settings view controller to the user.
  */
-class SettingsOptionTableViewCell: UITableViewCell {
+final class SettingsOptionTableViewCell: UITableViewCell {
 
     // MARK: - Cell Properties
 

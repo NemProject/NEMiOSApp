@@ -9,7 +9,7 @@ import UIKit
 import SwiftyJSON
 
 /// The view controller that lets the user handle all available settings in correspondence with servers/NIS.
-class SettingsServerViewController: UIViewController {
+final class SettingsServerViewController: UIViewController {
     
     // MARK: - View Controller Properties
 

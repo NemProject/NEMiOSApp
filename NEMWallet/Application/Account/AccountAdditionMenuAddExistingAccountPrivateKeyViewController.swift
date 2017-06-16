@@ -11,7 +11,7 @@ import UIKit
     The view controller that lets the user add an existing account by
     importing a private key.
  */
-class AccountAdditionMenuAddExistingAccountPrivateKeyViewController: UIViewController {
+final class AccountAdditionMenuAddExistingAccountPrivateKeyViewController: UIViewController {
     
     // MARK: - View Controller Properties
     

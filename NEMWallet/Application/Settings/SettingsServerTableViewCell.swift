@@ -8,7 +8,7 @@
 import UIKit
 
 /// The table view cell that represents a server.
-class SettingsServerTableViewCell: UITableViewCell {
+final class SettingsServerTableViewCell: UITableViewCell {
     
     // MARK: - Cell Properties
     

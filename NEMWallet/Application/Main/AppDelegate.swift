@@ -9,7 +9,7 @@ import UIKit
 import AlamofireNetworkActivityIndicator
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Application Properties
     

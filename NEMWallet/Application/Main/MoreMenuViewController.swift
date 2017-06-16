@@ -8,7 +8,7 @@
 import UIKit
 
 /// The more menu view controller that shows more actions / options to choose from.
-class MoreMenuViewController: UITableViewController {
+final class MoreMenuViewController: UITableViewController {
     
     // MARK: - View Controller Outlets
     

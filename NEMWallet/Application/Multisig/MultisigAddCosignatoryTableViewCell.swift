@@ -8,7 +8,7 @@
 import UIKit
 
 /// The table view cell that lets the user add a new multisig cosigner.
-class MultisigAddCosignatoryTableViewCell: UITableViewCell {
+final class MultisigAddCosignatoryTableViewCell: UITableViewCell {
 
     // MARK: - Cell Outlets
     

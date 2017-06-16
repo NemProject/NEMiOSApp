@@ -15,7 +15,7 @@ import UIKit
     to create a new account, add an existing account via QR code or
     add an existing account via public key.
  */
-class AccountAdditionMenuViewController: UIViewController {
+final class AccountAdditionMenuViewController: UIViewController {
     
     // MARK: - View Controller Outlets
     
