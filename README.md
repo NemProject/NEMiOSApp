@@ -1,21 +1,23 @@
-# NEMiOSApp #
+# NEM iOS Wallet
 
-NEM iOS Wallet Application.
+### Release version
 
-## Release version
+You can get the app on the [AppStore](https://itunes.apple.com/us/app/nem-wallet/id1227112677).
 
-You can get app at [AppStore](https://itunes.apple.com/us/app/nem-wallet/id1227112677) .
+# Contributing
 
-# How to develop
+### How to get started
+Run the following commands in your terminal to get started:
 
-Run following commands.
+1. Clone the repository
+<pre>git clone https://github.com/NemProject/NEMiOSApp.git</pre>
 
-```
-git clone https://github.com/NemProject/NEMiOSApp.git
-carthage update --platform iOS --no-use-binaries
-open NEMWallet.xcodeproj
-```
+2. Fetch and build all dependencies
+<pre>carthage update --platform iOS --no-use-binaries</pre>
+
+3. Open the project with Xcode
+<pre>open NEMWallet.xcodeproj</pre>
 
 # License
 
-[MIT](./LICENSE)
+NEM iOS Wallet is released under an MIT license. See the [LICENSE](./LICENSE) file for more information.
