@@ -146,6 +146,7 @@
 		4FE02C131DA2E1180057740D /* ServerExceptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE02C121DA2E1180057740D /* ServerExceptions.swift */; };
 		4FE70AAB1DA6D24300C62F1C /* UIApplication+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE70AAA1DA6D24300C62F1C /* UIApplication+Additions.swift */; };
 		4FFF8F011D51D7E600B4BB9F /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFF8F001D51D7E600B4BB9F /* AccountModel.swift */; };
+		644160CB1EF8EA0B00534DB9 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 644160CA1EF8EA0B00534DB9 /* Settings.bundle */; };
 		64F22B8D1EE67B9700780900 /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F22B8C1EE67B9700780900 /* UIViewController+Additions.swift */; };
 		9809BE271B75008F0028D082 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9809BE291B75008F0028D082 /* Localizable.strings */; };
 		98BB95D31BCCED5B002151F7 /* readme.md in Sources */ = {isa = PBXBuildFile; fileRef = 98BB95B91BCCED5B002151F7 /* readme.md */; };
@@ -358,6 +359,7 @@
 		4FE02C121DA2E1180057740D /* ServerExceptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerExceptions.swift; sourceTree = "<group>"; };
 		4FE70AAA1DA6D24300C62F1C /* UIApplication+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Additions.swift"; sourceTree = "<group>"; };
 		4FFF8F001D51D7E600B4BB9F /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
+		644160CA1EF8EA0B00534DB9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		64F22B8C1EE67B9700780900 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
 		98019A4E1CAC1E4400C61638 /* id-ID */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "id-ID"; path = "id-ID.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		98019A4F1CAC270E00C61638 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -810,6 +812,7 @@
 				4F3ACE911D61C2EE0056F234 /* Response+ObjectMapper.swift */,
 				4FA92FC61D7093A800C9477B /* KeyboardLayoutConstraint.swift */,
 				DA194E051A431C690030C882 /* Cryptography */,
+				644160CA1EF8EA0B00534DB9 /* Settings.bundle */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -1079,6 +1082,7 @@
 				4F9F67F21D4C31300086F98F /* Main.storyboard in Resources */,
 				4F15DCAF1DA2B3E10042997C /* DefaultServers.plist in Resources */,
 				9809BE271B75008F0028D082 /* Localizable.strings in Resources */,
+				644160CB1EF8EA0B00534DB9 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
