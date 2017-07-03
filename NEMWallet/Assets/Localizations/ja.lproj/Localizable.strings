@@ -246,7 +246,7 @@
 
 "UPDATE_INTERVAL" = "更新間隔";
 "UNCONFIRMED_TRANSACTIONS_DETECTED" = "あなたのアカウントには署名が必要な未確認の取引があります！";
-"UNLOCKED" = "ロックを解除する";
+"UNLOCKED" = "ロックは解除されています";
 
 // MARK: - V
 
