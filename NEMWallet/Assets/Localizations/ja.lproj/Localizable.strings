@@ -29,7 +29,7 @@
 "ADDRESS_COPIED" = "コピーしました。";
 "AMOUNT" = "数量";
 "ACCOUNTS" = "アカウント";
-"ACCOUNT_NOT_ENOUGHT_MONEY" = "不足金";
+"ACCOUNT_NOT_ENOUGHT_MONEY" = "残高が不足しています";
 "ACCOUNT" = "アカウント";
 "ADD" = "追加";
 "ADD_COSIGNATORY" = "署名者";
@@ -91,7 +91,7 @@
 "FIELDS_EMPTY_ERROR" = "全ての欄に入力してください。";
 "FIRST_NAME" = "名前";
 "FEE" = "手数料";
-"FROM" = "から";
+"FROM" = "送金元";
 "FIELDS_EMPTY_ERROR" = "全ての欄に入力してください。";
 "FAILURE_MULTISIG_ACCOUNT_CANNOT_BE_COSIGNER" = "署名者は自分でマルチシグネチャアカウントを開けません。";
 
@@ -240,7 +240,7 @@
 "TOUCH_ID" = "タッチID";
 "TRANSACTION_ANOUNCE_SUCCESS" = "取引は送信されました！";
 "TRANSACTION_ANOUNCE_FAILED" = "取引は拒否されました。 \n 後でもう一度試すか、サーバー接続を確認してください。";
-"TO" = "へ";
+"TO" = "送金先";
 
 // MARK: - U
 
