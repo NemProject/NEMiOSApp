@@ -121,13 +121,13 @@ extension String {
     /**
         Creates an image from the captured QR code.
 
-        - Parameter captureResult: The capture result from the scanned QR code that should get turned into an image.
-
-        - Returns: The scanned QR code as an image.
+        - Returns: The scanned QR code as an image. Return nil If failed to create image.
      */
-    func createQRCodeImage() -> UIImage {
+    func createQRCodeImage() -> UIImage? {
 
-        let qrCodeCIImage: CIImage = self.createQRCodeCIImage()
+        guard let qrCodeCIImage: CIImage = self.createQRCodeCIImage() else {
+            return nil
+        }
         let qrCodeUIImage: UIImage = qrCodeCIImage.createNonInterpolatedUIImage(scale: 10)
 
         return UIImage(cgImage: qrCodeUIImage.cgImage!, scale: 1.0, orientation: .downMirrored)
@@ -136,17 +136,15 @@ extension String {
     /**
         Creates a CI image from the captured QR code.
 
-        - Parameter captureResult: The capture result from the scanned QR code that should get turned into a CI image.
-
-        - Returns: The scanned QR code as a CI image.
+        - Returns: The scanned QR code as a CI image. Return nil If failed to create image.
      */
-    func createQRCodeCIImage() -> CIImage {
+    func createQRCodeCIImage() -> CIImage? {
 
         let stringData: Data = (self as NSString).data(using: String.Encoding.utf8.rawValue)!
         let qrCodeFilter: CIFilter = CIFilter(name: "CIQRCodeGenerator")!
         qrCodeFilter.setValue(stringData, forKey: "inputMessage")
         qrCodeFilter.setValue("M", forKey: "inputCorrectionLevel")
 
-        return qrCodeFilter.outputImage!
+        return qrCodeFilter.outputImage ?? nil
     }
 }
