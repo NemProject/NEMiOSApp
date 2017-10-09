@@ -790,6 +790,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
         
         let pasteBoard = UIPasteboard.general
         pasteBoard.string = correspondent!.accountAddress
+        showAlert(withMessage: "COPY_ADDRESS".localized())
     }
     
     /**
