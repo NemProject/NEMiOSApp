@@ -1,10 +1,10 @@
 github "Alamofire/Alamofire" ~> 4.0
 github "Alamofire/AlamofireNetworkActivityIndicator" ~> 2.0
-github "Moya/Moya" ~> 8.0
+github "Moya/Moya" ~> 10.0
 github "SwiftyJSON/SwiftyJSON" ~> 3.0
-github "Hearst-DD/ObjectMapper" ~> 2.0
+github "Hearst-DD/ObjectMapper" ~> 3.0
 github "krzyzanowskim/CryptoSwift"
-github "JohnEstropia/CoreStore" ~> 3.0
-github "marketplacer/keychain-swift" ~> 6.0
-github "Quick/Quick"
-github "Quick/Nimble"
+github "JohnEstropia/CoreStore" ~> 4.0
+github "evgenyneu/keychain-swift" ~> 10.0
+github "Quick/Quick" ~> 1.0
+github "Quick/Nimble" ~> 7.0

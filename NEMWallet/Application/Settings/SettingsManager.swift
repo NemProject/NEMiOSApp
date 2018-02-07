@@ -9,18 +9,78 @@ import Foundation
 import CoreStore
 import KeychainSwift
 
-/// The manager responsible for all tasks regarding application settings.
-open class SettingsManager {
+/**
+    The manager responsible for all tasks regarding application settings.
+    Use the singleton 'sharedInstace' of this manager to perform all kinds of tasks regarding application settings.
+ */
+final class SettingsManager {
     
     // MARK: - Manager Properties
     
-    /// The singleton for the settings manager.
-    open static let sharedInstance = SettingsManager()
+    /** 
+        The singleton for the settings manager. 
+        Only use this singelton to interact with the settings manager.
+     */
+    static let sharedInstance = SettingsManager()
     
-    /// The keychain object to access the keychain.
-    fileprivate let keychain = KeychainSwift()
+    /**
+        The keychain object used to access the keychain.
+        This leverages the dependency 'KeychainSwift'.
+     */
+    private var keychain: KeychainSwift {
+        let keychain = KeychainSwift()
+        keychain.synchronizable = true
+        return keychain
+    }
+    
+    /// The user defaults object used to access the user defaults store.
+    private let userDefaults = UserDefaults.standard
+    
+    // MARK: - Manager Lifecycle
+    
+    private init() {} // Prevents others from creating own instances of this manager and not using the singleton.
     
     // MARK: - Public Manager Methods
+    
+    /**
+        The current status of the application setup.
+        The application setup is a process the user has to complete on first launch of the application, where
+        he is able to choose an application password and more.
+     
+        - Returns: A bool indicating whether the application setup was already completed or not.
+     */
+    public func setupIsCompleted() -> Bool {
+        
+        let setupIsCompleted = userDefaults.bool(forKey: "setupStatus")
+        
+        return setupIsCompleted
+    }
+    
+    /**
+        The current status of the Touch ID authentication setting.
+        The user is able to activate authentication via Touch ID in the settings.
+     
+        - Returns: True if authentication via Touch ID is activated and false if not.
+     */
+    public func touchIDAuthenticationIsActivated() -> Bool {
+        
+        let touchIDAuthenticationIsActivated = userDefaults.bool(forKey: "authenticationTouchIDStatus")
+        
+        return touchIDAuthenticationIsActivated
+    }
+    
+    /**
+        The authentication salt.
+        All private keys get encrypted using the application password and this salt.
+     
+        - Returns: The current authentication salt of the application.
+     */
+    open func authenticationSalt() -> String? {
+        
+        let authenticationSalt = keychain.get("authenticationSalt")
+        
+        return authenticationSalt
+    }
     
     /**
         Sets the setup status for the application.
@@ -31,19 +91,6 @@ open class SettingsManager {
         
         let userDefaults = UserDefaults.standard
         userDefaults.set(setupDone, forKey: "setupStatus")
-    }
-    
-    /**
-        Gets and returns the setup status.
-     
-        - Returns: Bool indicating whether the setup was already completed or not.
-     */
-    open func setupStatus() -> Bool {
-        
-        let userDefaults = UserDefaults.standard
-        let setupStatus = userDefaults.bool(forKey: "setupStatus") 
-        
-        return setupStatus
     }
     
     /**
@@ -107,18 +154,6 @@ open class SettingsManager {
     open func setAuthenticationSalt(authenticationSalt: String) {
         
         keychain.set(authenticationSalt, forKey: "authenticationSalt")
-    }
-    
-    /**
-        Gets and returns the currently set authentication salt.
-     
-        - Returns: The current authentication salt of the application.
-     */
-    open func authenticationSalt() -> String? {
-        
-        let authenticationSalt = keychain.get("authenticationSalt")
-        
-        return authenticationSalt
     }
     
     /**
@@ -205,19 +240,6 @@ open class SettingsManager {
     }
     
     /**
-        Gets and returns the authentication touch id status.
-     
-        - Returns: The status of the authentication touch id setting as a boolean.
-     */
-    open func authenticationTouchIDStatus() -> Bool {
-        
-        let userDefaults = UserDefaults.standard
-        let authenticationTouchIDStatus = userDefaults.bool(forKey: "authenticationTouchIDStatus")
-        
-        return authenticationTouchIDStatus
-    }
-    
-    /**
         Fetches all stored servers from the database.
      
         - Returns: An array of servers.
@@ -240,24 +262,22 @@ open class SettingsManager {
      */
     open func create(server address: String, withProtocolType protocolType: String, andPort port: String, completion: @escaping (_ result: Result) -> Void) {
         
-        DatabaseManager.sharedInstance.dataStack.beginAsynchronous { (transaction) -> Void in
+        DatabaseManager.sharedInstance.dataStack.perform(
+            asynchronous: { (transaction) -> Void in
             
-            let server = transaction.create(Into(Server.self))
-            server.address = address
-            server.protocolType = protocolType
-            server.port = port
-            server.isDefault = false
-            
-            transaction.commit { (result) -> Void in
-                switch result {
-                case .success( _):
-                    return completion(.success)
-                    
-                case .failure( _):
-                    return completion(.failure)
-                }
+                let server = transaction.create(Into(Server.self))
+                server.address = address
+                server.protocolType = protocolType
+                server.port = port
+                server.isDefault = false
+            },
+            success: {
+                return completion(.success)
+            },
+            failure: { (error) in
+                return completion(.failure)
             }
-        }
+        )
     }
     
     /**
@@ -267,35 +287,32 @@ open class SettingsManager {
      */
     open func createDefaultServers(completion: @escaping (_ result: Result) -> Void) {
         
-        DatabaseManager.sharedInstance.dataStack.beginAsynchronous { [unowned self] (transaction) -> Void in
+        DatabaseManager.sharedInstance.dataStack.perform(
+            asynchronous: { (transaction) -> Void in
             
-            let mainBundle = Bundle.main
-            let resourcePath = network == testNetwork ? mainBundle.path(forResource: "TestnetDefaultServers", ofType: "plist")! : mainBundle.path(forResource: "DefaultServers", ofType: "plist")!
-            
-            let defaultServers = NSDictionary(contentsOfFile: resourcePath)! as! [String: [String]]
-            
-            for (_, defaultServer) in defaultServers {
-                let server = transaction.create(Into(Server.self))
-                server.protocolType = defaultServer[0]
-                server.address = defaultServer[1]
-                server.port = defaultServer[2]
-                server.isDefault = true
-            }
-            
-            transaction.commit { [unowned self] (result) -> Void in
-                switch result {
-                case .success( _):
-                    
-                    self.setActiveServer(server: self.servers().first!)
-                    self.setDefaultServerStatus(createdDefaultServers: true)
-                    
-                    return completion(.success)
-                    
-                case .failure( _):
-                    return completion(.failure)
+                let mainBundle = Bundle.main
+                let resourcePath = Constants.activeNetwork == Constants.testNetwork ? mainBundle.path(forResource: "TestnetDefaultServers", ofType: "plist")! : mainBundle.path(forResource: "DefaultServers", ofType: "plist")!
+                
+                let defaultServers = NSDictionary(contentsOfFile: resourcePath)! as! [String: [String]]
+                
+                for (_, defaultServer) in defaultServers {
+                    let server = transaction.create(Into(Server.self))
+                    server.protocolType = defaultServer[0]
+                    server.address = defaultServer[1]
+                    server.port = defaultServer[2]
+                    server.isDefault = true
                 }
+            },
+            success: {
+                
+                self.setActiveServer(server: self.servers().first!)
+                self.setDefaultServerStatus(createdDefaultServers: true)
+                return completion(.success)
+            },
+            failure: { (error) in
+                return completion(.failure)
             }
-        }
+        )
     }
     
     /**
@@ -315,12 +332,13 @@ open class SettingsManager {
             self.setActiveServer(server: servers.first!)
         }
         
-        DatabaseManager.sharedInstance.dataStack.beginAsynchronous { (transaction) -> Void in
+        DatabaseManager.sharedInstance.dataStack.perform(
+            asynchronous: { (transaction) -> Void in
             
-            transaction.delete(server)
-            
-            transaction.commit()
-        }
+                transaction.delete(server)
+            },
+            completion: { _ in }
+        )
     }
     
     /**
@@ -333,27 +351,25 @@ open class SettingsManager {
      */
     open func updateProperties(forServer server: Server, withNewProtocolType protocolType: String, andNewAddress address: String, andNewPort port: String, completion: @escaping (_ result: Result) -> Void) {
         
-        DatabaseManager.sharedInstance.dataStack.beginAsynchronous { [unowned self] (transaction) -> Void in
+        DatabaseManager.sharedInstance.dataStack.perform(
+            asynchronous: { (transaction) -> Void in
             
-            let editableServer = transaction.edit(server)!
-            editableServer.protocolType = protocolType
-            editableServer.address = address
-            editableServer.port = port
-            
-            if server.address != address && server == self.activeServer() {
-                self.setActiveServer(serverAddress: address)
-            }
-            
-            transaction.commit { (result) -> Void in
-                switch result {
-                case .success( _):
-                    return completion(.success)
-                    
-                case .failure( _):
-                    return completion(.failure)
+                let editableServer = transaction.edit(server)!
+                editableServer.protocolType = protocolType
+                editableServer.address = address
+                editableServer.port = port
+                
+                if server.address != address && server == self.activeServer() {
+                    self.setActiveServer(serverAddress: address)
                 }
+            },
+            success: {
+                return completion(.success)
+            },
+            failure: { (error) in
+                return completion(.failure)
             }
-        }
+        )
     }
     
     /**
@@ -416,29 +432,5 @@ open class SettingsManager {
         }
         
         return activeServer!
-    }
-    
-    /**
-        Sets the notification update interval.
-     
-        - Parameter notificationUpdateInterval: The update interval that should get set as active.
-     */
-    open func setNotificationUpdateInterval(notificationUpdateInterval: Int) {
-        
-        let userDefaults = UserDefaults.standard
-        userDefaults.set(notificationUpdateInterval, forKey: "notificationUpdateInterval")
-    }
-    
-    /**
-        Fetches and returns the notification update interval.
-     
-        - Returns: The currently set notification update interval.
-     */
-    open func notificationUpdateInterval() -> Int {
-        
-        let userDefaults = UserDefaults.standard
-        let notificationUpdateInterval = userDefaults.integer(forKey: "notificationUpdateInterval")
-        
-        return notificationUpdateInterval
     }
 }

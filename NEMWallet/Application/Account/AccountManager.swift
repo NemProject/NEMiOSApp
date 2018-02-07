@@ -2,7 +2,7 @@
 //  AccountManager.swift
 //
 //  This file is covered by the LICENSE file in the root of this project.
-//  Copyright (c) 2016 NEM
+//  Copyright (c) 2017 NEM
 //
 
 import Foundation
@@ -10,109 +10,124 @@ import CoreStore
 import CryptoSwift
 
 /**
-    The account manager singleton used to perform all kinds of actions
-    in relationship with an account. Use this managers available methods 
-    instead of writing your own logic.
+    The account manager singleton used to perform all kinds of actions in relationship with an account. 
+    Use this managers available methods instead of writing your own logic.
  */
-open class AccountManager {
+final class AccountManager {
     
     // MARK: - Manager Properties
     
     /// The singleton for the account manager.
-    open static let sharedInstance = AccountManager()
+    static let sharedInstance = AccountManager()
     
     /// The currently active account.
-    open var activeAccount: Account?
+    public var activeAccount: Account?
+    
+    // MARK: - Manager Lifecycle
+    
+    private init() {} // Prevents others from creating own instances of this manager and not using the singleton.
     
     // MARK: - Public Manager Methods
     
     /**
-        Fetches all stored accounts from the database.
+        All accounts that are stored on the device.
      
-        - Returns: An array of accounts ordered by position (ascending).
+        - Returns: An array of accounts ordered by the user defined position (ascending).
      */
-    open func accounts() -> [Account] {
+    public func accounts() -> [Account] {
         
         let accounts = DatabaseManager.sharedInstance.dataStack.fetchAll(From(Account.self), OrderBy(.ascending("position"))) ?? []
-        
         return accounts
     }
     
     /**
-        Creates a new account object and stores that object in the database.
+        Creates a new account and stores it on the device.
+        You can later fetch stored accounts with the 'accounts' method.
      
         - Parameter title: The title/name of the new account.
+        - Parameter privateKey: The private key of the account (optional). If no private key is provided, a new one will be generated.
      
-        - Returns: The result of the operation - success or failure.
+        - Returns: The result of the operation - success or failure as well as the newly created account.
      */
-    open func create(account title: String, withPrivateKey privateKey: String? = nil, completion: @escaping (_ result: Result) -> Void) {
+    public func create(account title: String, withPrivateKey privateKey: String? = AccountManager.sharedInstance.generatePrivateKey(), completion: @escaping (_ result: Result, _ account: Account?) -> Void) {
+
         
-        DatabaseManager.sharedInstance.dataStack.beginAsynchronous { [unowned self] (transaction) -> Void in
-            
-            var privateKey = privateKey
-            if privateKey == nil {
-                privateKey = self.generatePrivateKey()
+        DatabaseManager.sharedInstance.dataStack.perform(
+            asynchronous: { (transaction) -> Account in
+                
+                let account = transaction.create(Into(Account.self))
+                account.title = title
+                account.publicKey = self.generatePublicKey(fromPrivateKey: privateKey!)
+                account.privateKey = self.encryptPrivateKey(privateKey!)
+                account.address = self.generateAddress(forPublicKey: account.publicKey)
+                account.position = self.positionForNewAccount() as NSNumber
+                
+                return account
+            },
+            success: { (accountTransaction) in
+                
+                let account = DatabaseManager.sharedInstance.dataStack.fetchExisting(accountTransaction)!
+                return completion(.success, account)
+            },
+            failure: { (error) in
+                return completion(.failure, nil)
             }
-            
-            let encryptedPrivateKey = self.encryptPrivateKey(privateKey!)
-            
-            let account = transaction.create(Into(Account.self))
-            account.title = title
-            account.publicKey = self.generatePublicKey(forPrivateKey: privateKey!)
-            account.privateKey = encryptedPrivateKey
-            account.address = self.generateAddress(forPublicKey: account.publicKey)
-            account.position = self.positionForNewAccount() as NSNumber
-                                    
-            transaction.commit { (result) -> Void in
-                switch result {
-                case .success( _):
-                    return completion(.success)
-                    
-                case .failure( _):
-                    return completion(.failure)
-                }
-            }
-        }
+        )
     }
     
     /**
-        Deletes the provided account object from the database and updates the
-        position of all other accounts accordingly.
+        Deletes the provided account from the device.
         
-        - Parameter account: The account object that should get deleted.
+        - Parameter account: The account that should get deleted.
+     
+        - Returns: The result of the operation.
      */
-    open func delete(account: Account) {
+    public func delete(account: Account, completion: @escaping (_ result: Result) -> Void) {
         
         var accounts = self.accounts()
         accounts.remove(at: Int(account.position))
         
-        updatePosition(forAccounts: accounts)
-        
-        DatabaseManager.sharedInstance.dataStack.beginAsynchronous { (transaction) -> Void in
+        DatabaseManager.sharedInstance.dataStack.perform(
+            asynchronous: { (transaction) -> Void in
             
-            transaction.delete(account)
-            
-            transaction.commit()
-        }
+                transaction.delete(account)
+            },
+            success: {
+                
+                /// Update the position of all other accounts accordingly.
+                self.updatePosition(ofAccounts: accounts, completion: { (result) in return completion(.success) })
+            },
+            failure: { (error) in
+                return completion(.failure)
+            }
+        )
     }
     
     /**
-        Stores an account move from the account list in the database by updating 
-        the position for all accounts.
+        Updates the position of all accounts in the account list.
+        Account positions will get updated in the database according to the positions of the accounts in the provided 'accounts' array.
      
-        - Parameter accounts: An array of all accounts in their state after the move (with their new indexPath).
+        - Parameter accounts: An array containing all accounts where their new position in the account list is already represented.
+     
+        - Returns: The result of the operation.
      */
-    open func updatePosition(forAccounts accounts: [Account]) {
+    public func updatePosition(ofAccounts accounts: [Account], completion: @escaping (_ result: Result) -> Void) {
         
-        DatabaseManager.sharedInstance.dataStack.beginAsynchronous { (transaction) -> Void in
+        DatabaseManager.sharedInstance.dataStack.perform(
+            asynchronous: { (transaction) -> Void in
             
-            for account in accounts {
-                let editableAccount = transaction.edit(account)!
-                editableAccount.position = accounts.index(of: account)! as NSNumber
+                for account in accounts {
+                    let editableAccount = transaction.edit(account)!
+                    editableAccount.position = accounts.index(of: account)! as NSNumber
+                }
+            },
+            success: {
+                return completion(.success)
+            },
+            failure: { (error) in
+                return completion(.failure)
             }
-            
-            transaction.commit()
-        }
+        )
     }
     
     /**
@@ -122,15 +137,16 @@ open class AccountManager {
         - Parameter account: The account for which the encrypted private key should get updated.
         - Parameter privateKey: The new encrypted private key with which the existing one should get updated.
      */
-    open func updatePrivateKey(forAccount account: Account, withNewPrivateKey privateKey: String) {
+    public func updatePrivateKey(forAccount account: Account, withNewPrivateKey privateKey: String) {
         
-        DatabaseManager.sharedInstance.dataStack.beginAsynchronous { (transaction) -> Void in
+        DatabaseManager.sharedInstance.dataStack.perform(
+            asynchronous: { (transaction) -> Void in
             
-            let editableAccount = transaction.edit(account)!
-            editableAccount.privateKey = privateKey
-            
-            transaction.commit()
-        }
+                let editableAccount = transaction.edit(account)!
+                editableAccount.privateKey = privateKey
+            },
+            completion: { _ in }
+        )
     }
     
     /**
@@ -139,15 +155,16 @@ open class AccountManager {
         - Parameter account: The account for which the latest transaction hash should get updated.
         - Parameter latestTransactionHash: The latest transaction hash with which the existing one should get updated.
      */
-    open func updateLatestTransactionHash(forAccount account: Account, withLatestTransactionHash latestTransactionHash: String) {
+    public func updateLatestTransactionHash(forAccount account: Account, withLatestTransactionHash latestTransactionHash: String) {
         
-        DatabaseManager.sharedInstance.dataStack.beginAsynchronous { (transaction) -> Void in
+        DatabaseManager.sharedInstance.dataStack.perform(
+            asynchronous: { (transaction) -> Void in
             
-            let editableAccount = transaction.edit(account)!
-            editableAccount.latestTransactionHash = latestTransactionHash
-            
-            transaction.commit()
-        }
+                let editableAccount = transaction.edit(account)!
+                editableAccount.latestTransactionHash = latestTransactionHash
+            },
+            completion: { _ in }
+        )
     }
     
     /**
@@ -156,15 +173,16 @@ open class AccountManager {
         - Parameter account: The existing account that should get updated.
         - Parameter title: The new title for the account that should get updated.
      */
-    open func updateTitle(forAccount account: Account, withNewTitle title: String) {
+    public func updateTitle(forAccount account: Account, withNewTitle title: String) {
         
-        DatabaseManager.sharedInstance.dataStack.beginAsynchronous { (transaction) -> Void in
+        DatabaseManager.sharedInstance.dataStack.perform(
+            asynchronous: { (transaction) -> Void in
             
-            let editableAccount = transaction.edit(account)!
-            editableAccount.title = title
-            
-            transaction.commit()
-        }
+                let editableAccount = transaction.edit(account)!
+                editableAccount.title = title
+            },
+            completion: { _ in }
+        )
     }
     
     /**
@@ -176,7 +194,7 @@ open class AccountManager {
      
         - Returns: The title of the account with the provided account address. If no title was found the method will return nil.
      */
-    open func titleForAccount(withAddress accountAddress: String) -> String? {
+    public func titleForAccount(withAddress accountAddress: String) -> String? {
         
         let accountAddress = accountAddress.replacingOccurrences(of: "-", with: "")
         
@@ -200,7 +218,7 @@ open class AccountManager {
      
         - Returns: A bool indicating that no account with the provided private key was added to the application.
      */
-    open func validateAccountExistence(forAccountWithPrivateKey privateKey: String) throws -> Bool {
+    public func validateAccountExistence(forAccountWithPrivateKey privateKey: String) throws -> Bool {
         
         let accounts = self.accounts()
         
@@ -223,7 +241,7 @@ open class AccountManager {
      
         - Returns: A bool indicating whether the key is valid or not.
      */
-    open func validateKey(_ key: String, length: Int = 64) -> Bool {
+    public func validateKey(_ key: String, length: Int = 64) -> Bool {
 
         let validator = Array<UInt8>("0123456789abcdef".utf8)
         var keyArray = Array<UInt8>(key.utf8)
@@ -260,7 +278,7 @@ open class AccountManager {
      
         - Returns: The generated address as a string.
      */
-    open func generateAddress(forPublicKey publicKey: String) -> String {
+    public func generateAddress(forPublicKey publicKey: String) -> String {
         
         var inBuffer = publicKey.asByteArray()
         var stepOneSHA256: Array<UInt8> = Array(repeating: 0, count: 64)
@@ -272,7 +290,7 @@ open class AccountManager {
         let stepTwoRIPEMD160Buffer = stepTwoRIPEMD160Text.asByteArray()
         
         var version = Array<UInt8>()
-        version.append(network)
+        version.append(Constants.activeNetwork)
         
         var stepThreeVersionPrefixedRipemd160Buffer = version + stepTwoRIPEMD160Buffer
         var checksumHash: Array<UInt8> = Array(repeating: 0, count: 64)
@@ -300,9 +318,9 @@ open class AccountManager {
      
         - Returns: The generated address as a string.
      */
-    open func generateAddress(forPrivateKey privateKey: String) -> String {
+    public func generateAddress(forPrivateKey privateKey: String) -> String {
         
-        let publicKey = generatePublicKey(forPrivateKey: privateKey)
+        let publicKey = generatePublicKey(fromPrivateKey: privateKey)
         return generateAddress(forPublicKey: publicKey)
     }
     
@@ -314,7 +332,7 @@ open class AccountManager {
      
         - Returns: The encrypted private key as a string.
      */
-    open func encryptPrivateKey(_ privateKey: String, withApplicationPassword applicationPassword: String? = nil) -> String {
+    public func encryptPrivateKey(_ privateKey: String, withApplicationPassword applicationPassword: String? = nil) -> String {
         
         let defaultApplicationPassword = SettingsManager.sharedInstance.applicationPassword()
         let encryptedPrivateKey = HashManager.AES256Encrypt(inputText: privateKey, key: applicationPassword != nil ? applicationPassword! : defaultApplicationPassword)
@@ -329,7 +347,7 @@ open class AccountManager {
      
         - Returns: The decrypted private key as a string.
      */
-    open func decryptPrivateKey(encryptedPrivateKey: String) -> String {
+    public func decryptPrivateKey(encryptedPrivateKey: String) -> String {
         
         let applicationPassword = SettingsManager.sharedInstance.applicationPassword()
         let privateKey = HashManager.AES256Decrypt(inputText: encryptedPrivateKey, key: applicationPassword)
@@ -344,7 +362,7 @@ open class AccountManager {
      
         - Returns: The position for a new account in the account list as an integer.
      */
-    fileprivate func positionForNewAccount() -> Int {
+    private func positionForNewAccount() -> Int {
         
         if let maxPosition = DatabaseManager.sharedInstance.dataStack.queryValue(From(Account.self), Select<Int>(.maximum(#keyPath(Account.position)))) {
             if (maxPosition == 0) {
@@ -358,7 +376,7 @@ open class AccountManager {
     }
     
     /// Generates a new and unique private key.
-    fileprivate func generatePrivateKey() -> String {
+    private func generatePrivateKey() -> String {
         
         var privateKeyBytes: Array<UInt8> = Array(repeating: 0, count: 32)
         createPrivateKey(&privateKeyBytes)
@@ -369,13 +387,13 @@ open class AccountManager {
     }
     
     /**
-        Generates the public key for the provided private key.
+        Generates the public key from the provided private key.
      
         - Parameter privateKey: The private key for which the public key should get generated.
      
-        - Returns: The generated public key as a string.
+        - Returns: The generated public key as a hex string.
      */
-    fileprivate func generatePublicKey(forPrivateKey privateKey: String) -> String {
+    private func generatePublicKey(fromPrivateKey privateKey: String) -> String {
         
         var publicKeyBytes: Array<UInt8> = Array(repeating: 0, count: 32)
         var privateKeyBytes: Array<UInt8> = privateKey.asByteArrayEndian(privateKey.asByteArray().count)

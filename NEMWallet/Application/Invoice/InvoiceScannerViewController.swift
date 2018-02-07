@@ -6,46 +6,110 @@
 //
 
 import UIKit
+import AVFoundation
 import SwiftyJSON
 import Contacts
 
 /// The view controller that lets the user scan an invoice.
-class InvoiceScannerViewController: UIViewController {
+final class InvoiceScannerViewController: UIViewController {
     
     // MARK: - View Controller Properties
     
-    /// Bool that indicates whether the QR code scanner view is already scanning.
-    fileprivate var isScanning = false
+    private enum SessionSetupResult {
+        case success
+        case notAuthorized
+        case configurationFailed
+    }
     
-    fileprivate var cameraNotAvailable = false
+    private let session = AVCaptureSession()
+    private var isSessionRunning = false
+    private let sessionQueue = DispatchQueue(label: "session queue", attributes: [], target: nil)
+    private var setupResult: SessionSetupResult = .success
+    private var videoDeviceInput: AVCaptureDeviceInput!
+    private var metaDataOutput = AVCaptureMetadataOutput()
     
     // MARK: - View Controller Outlets
     
-    @IBOutlet weak var qrCodeScannerView: QRCodeScannerView!
+    @IBOutlet weak var qrCodeScannerView: QRScannerView!
     
     // MARK: - View Controller Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.layoutIfNeeded()
+        qrCodeScannerView.session = session
         
-        qrCodeScannerView.delegate = self
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(resumeScanning), name: Notification.Name("resumeCaptureSession"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stopScanning), name: Notification.Name("stopCaptureSession"), object: nil)
+        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        case .authorized:
+            break
+            
+        case .notDetermined:
+
+            sessionQueue.suspend()
+            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { [unowned self] granted in
+                if !granted {
+                    self.setupResult = .notAuthorized
+                }
+                self.sessionQueue.resume()
+            })
+            
+        default:
+            setupResult = .notAuthorized
+        }
+
+        sessionQueue.async { [unowned self] in
+            self.configureSession()
+        }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        resumeScanning()
+        sessionQueue.async {
+            switch self.setupResult {
+            case .success:
+
+                self.addObservers()
+                self.session.startRunning()
+                self.isSessionRunning = self.session.isRunning
+                
+            case .notAuthorized:
+                
+                DispatchQueue.main.async { [unowned self] in
+                    let alertController = UIAlertController(title: "Warning", message: "NEM Wallet doesn't have permission to use the camera, please change privacy settings", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: .cancel, handler: nil))
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("Settings", comment: "Alert button to open Settings"), style: .default, handler: { _ in
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+                        }
+                    }))
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                }
+                
+            case .configurationFailed:
+                
+                DispatchQueue.main.async { [unowned self] in
+                    let alertController = UIAlertController(title: "Error", message: "Something went wrong when accessing the device camera", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Alert OK button"), style: .cancel, handler: nil))
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
         
-        stopScanning()
+        sessionQueue.async { [weak self] in
+            if self?.setupResult == .success {
+                self?.session.stopRunning()
+                self?.isSessionRunning = false
+                self?.removeObservers()
+            }
+        }
+        
+        super.viewWillDisappear(animated)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -64,11 +128,88 @@ class InvoiceScannerViewController: UIViewController {
         }
     }
     
-    deinit {
+    // MARK: - View Controller Helper Methods
+    
+    ///
+    private func configureSession() {
+        
+        if setupResult != .success {
+            return
+        }
+        
+        session.beginConfiguration()
+        
+        // Add video input.
+        do {
+            var defaultVideoDevice: AVCaptureDevice?
+            defaultVideoDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+            let videoDeviceInput = try AVCaptureDeviceInput(device: defaultVideoDevice!)
+            
+            if session.canAddInput(videoDeviceInput) {
+                session.addInput(videoDeviceInput)
+                self.videoDeviceInput = videoDeviceInput
+                
+                DispatchQueue.main.async {
+                    let initialVideoOrientation: AVCaptureVideoOrientation = .portrait
+                    self.qrCodeScannerView.videoPreviewLayer.connection?.videoOrientation = initialVideoOrientation
+                    self.qrCodeScannerView.videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+                }
+            } else {
+                print("Could not add video device input to the session")
+                setupResult = .configurationFailed
+                session.commitConfiguration()
+                return
+            }
+        } catch {
+            print("Could not create video device input: \(error)")
+            setupResult = .configurationFailed
+            session.commitConfiguration()
+            return
+        }
+        
+        // Add meta data output.
+        if session.canAddOutput(metaDataOutput) {
+            session.addOutput(metaDataOutput)
+            metaDataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            metaDataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
+        } else {
+            print("Could not add photo output to the session")
+            setupResult = .configurationFailed
+            session.commitConfiguration()
+            return
+        }
+        
+        session.commitConfiguration()
+    }
+    
+    private func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(sessionRuntimeError), name: .AVCaptureSessionRuntimeError, object: session)
+    }
+    
+    private func removeObservers() {
         NotificationCenter.default.removeObserver(self)
     }
     
-    // MARK: - View Controller Helper Methods
+    func sessionRuntimeError(notification: NSNotification) {
+        
+        guard let errorValue = notification.userInfo?[AVCaptureSessionErrorKey] as? NSError else {
+            return
+        }
+        
+        let error = AVError(_nsError: errorValue)
+        print("Capture session runtime error: \(error)")
+
+        if error.code == .mediaServicesWereReset {
+            sessionQueue.async { [unowned self] in
+                if self.isSessionRunning {
+                    self.session.startRunning()
+                    self.isSessionRunning = self.session.isRunning
+                } else {
+
+                }
+            }
+        }
+    }
     
     /**
         Validates the capture result of the QR code scan.
@@ -85,8 +226,8 @@ class InvoiceScannerViewController: UIViewController {
     fileprivate func validate(captureResult: JSON) throws -> Bool {
         
         guard captureResult != nil else { throw AccountImportValidation.valueMissing }
-        guard captureResult[QRKeys.Version.rawValue].intValue == QR_VERSION else { throw AccountImportValidation.versionNotMatching }
-        guard captureResult[QRKeys.DataType.rawValue].intValue == QRType.userData.rawValue || captureResult[QRKeys.DataType.rawValue].intValue == QRType.invoice.rawValue else { throw AccountImportValidation.dataTypeNotMatching }
+        guard captureResult[QRKeys.version.rawValue].intValue == Constants.qrVersion else { throw AccountImportValidation.versionNotMatching }
+        guard captureResult[QRKeys.dataType.rawValue].intValue == QRType.userData.rawValue || captureResult[QRKeys.dataType.rawValue].intValue == QRType.invoice.rawValue else { throw AccountImportValidation.dataTypeNotMatching }
         
         return true
     }
@@ -99,9 +240,9 @@ class InvoiceScannerViewController: UIViewController {
      */
     fileprivate func addContact(withJsonData jsonData: JSON) {
         
-        let firstName = jsonData[QRKeys.Name.rawValue].stringValue
+        let firstName = jsonData[QRKeys.name.rawValue].stringValue
         let lastName = jsonData["surname"].stringValue
-        let accountAddress = jsonData[QRKeys.Address.rawValue].stringValue
+        let accountAddress = jsonData[QRKeys.address.rawValue].stringValue
         
         let contact = CNMutableContact()
         contact.givenName = firstName
@@ -113,90 +254,67 @@ class InvoiceScannerViewController: UIViewController {
         
         performSegue(withIdentifier: "showAddressBookAddContactViewController", sender: nil)
     }
-    
-    /// Stops the capture session.
-    func stopScanning() {
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            if self.isScanning {
-                self.qrCodeScannerView.captureSession.stopRunning()
-            }
-        }
-    }
-    
-    /// Resumes the capture session.
-    func resumeScanning() {
-        
-        guard cameraNotAvailable == false else { return }
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            
-            if !self.isScanning {
-                self.isScanning = true
-                self.qrCodeScannerView.scanQRCode(self.qrCodeScannerView.frame.width , height: self.qrCodeScannerView.frame.height)
-            } else {
-                self.qrCodeScannerView.captureSession.startRunning()
-            }
-        }
-    }
 }
 
-// MARK: - QR Code Scanner Delegate
-
-extension InvoiceScannerViewController: QRCodeScannerDelegate {
+extension InvoiceScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     
-    func detectedQRCode(withCaptureResult captureResult: String) {
+    // MARK: - Capture Output Delegate
+    
+    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
         
-        guard let encodedCaptureResult = captureResult.data(using: String.Encoding.utf8) else {
-            qrCodeScannerView.captureSession.startRunning()
-            return
-        }
-        
-        let captureResultJSON = JSON(data: encodedCaptureResult)
-        
-        do {
-            let _ = try validate(captureResult: captureResultJSON)
-            
-            switch captureResultJSON[QRKeys.DataType.rawValue].intValue {
-            case QRType.userData.rawValue:
+        for item in metadataObjects {
+            if let metadataObject = item as? AVMetadataMachineReadableCodeObject , metadataObject.type == AVMetadataObjectTypeQRCode {
                 
-                print("scanned contact")
-                let contactJsonData = captureResultJSON[QRKeys.Data.rawValue]
-                addContact(withJsonData: contactJsonData)
+                guard let encodedCaptureResult = metadataObject.stringValue.data(using: String.Encoding.utf8) else {
+                    return
+                }
                 
-            case QRType.invoice.rawValue:
+                let captureResultJSON = JSON(data: encodedCaptureResult)
                 
-                print("scanned invoice")
-                let invoiceJsonData = captureResultJSON[QRKeys.Data.rawValue]
-                performSegue(withIdentifier: "showTransactionSendViewController", sender: invoiceJsonData)
-                
-            default:
-                throw AccountImportValidation.versionNotMatching
+                do {
+                    let _ = try validate(captureResult: captureResultJSON)
+                    
+                    switch captureResultJSON[QRKeys.dataType.rawValue].intValue {
+                    case QRType.userData.rawValue:
+                        
+                        print("scanned contact")
+                        let contactJsonData = captureResultJSON[QRKeys.data.rawValue]
+                        addContact(withJsonData: contactJsonData)
+                        
+                    case QRType.invoice.rawValue:
+                        
+                        print("scanned invoice")
+                        let invoiceJsonData = captureResultJSON[QRKeys.data.rawValue]
+                        performSegue(withIdentifier: "showTransactionSendViewController", sender: invoiceJsonData)
+                        
+                    default:
+                        throw AccountImportValidation.versionNotMatching
+                    }
+                    
+                } catch AccountImportValidation.versionNotMatching {
+                    
+                    failedDetectingQRCode(withError: "WRONG_QR_VERSION".localized())
+                    return
+                    
+                } catch AccountImportValidation.dataTypeNotMatching {
+                    
+                    failedDetectingQRCode(withError: "Wrong QR code type")
+                    return
+                    
+                } catch {
+                    
+                    return
+                }
             }
-            
-        } catch AccountImportValidation.versionNotMatching {
-            
-            failedDetectingQRCode(withError: "WRONG_QR_VERSION".localized())
-            qrCodeScannerView.captureSession.startRunning()
-            return
-            
-        } catch {
-            
-            qrCodeScannerView.captureSession.startRunning()
-            return
         }
     }
     
     func failedDetectingQRCode(withError errorMessage: String) {
         
-        cameraNotAvailable = true
-        
         let qrCodeDetectionFailureAlert: UIAlertController = UIAlertController(title: "INFO".localized(), message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
-        
         qrCodeDetectionFailureAlert.addAction(UIAlertAction(title: "OK".localized(), style: UIAlertActionStyle.default, handler: nil))
         
         DispatchQueue.main.async {
-            
             self.present(qrCodeDetectionFailureAlert, animated: true, completion: nil)
         }
     }

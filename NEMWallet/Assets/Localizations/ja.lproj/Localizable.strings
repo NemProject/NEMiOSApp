@@ -29,7 +29,7 @@
 "ADDRESS_COPIED" = "コピーしました。";
 "AMOUNT" = "数量";
 "ACCOUNTS" = "アカウント";
-"ACCOUNT_NOT_ENOUGHT_MONEY" = "不足金";
+"ACCOUNT_NOT_ENOUGHT_MONEY" = "残高が不足しています";
 "ACCOUNT" = "アカウント";
 "ADD" = "追加";
 "ADD_COSIGNATORY" = "署名者";
@@ -41,7 +41,7 @@
 
 "BASE" = "初期設定";
 "BLOCK" = "ブロック";
-"BALANCE" = "残高";
+"BALANCE" = "バランス";
 "BUILD" = "Build";
 
 // MARK: - C
@@ -69,7 +69,7 @@
 "DELETE_CONFIRMATION_MASSAGE_ADDRESSBOOK" = "本当に %@ からのコンタクトを削除しますか？"; // %@ will be replaced by contact name
 "DELETE_CONFIRMATION_MASSAGE_ACCOUNTS" = "本当にあなたのアカウントを削除しますか？"; // %@ will be replaced by account name
 "DELETE_CONFIRMATION_MASSAGE_SERVERS" = "本当に%@ からのサーバーを削除しますか？"; // %@ will be replaced by server address
-"DELEGATED_HARVESTING" = "委任されたハーベスティング";
+"DELEGATED_HARVESTING" = "デリゲートハーベスティング";
 "DELEGATED_KEY" = "委任されたキー";
 
 // MARK: - E
@@ -91,7 +91,7 @@
 "FIELDS_EMPTY_ERROR" = "全ての欄に入力してください。";
 "FIRST_NAME" = "名前";
 "FEE" = "手数料";
-"FROM" = "から";
+"FROM" = "送金元";
 "FIELDS_EMPTY_ERROR" = "全ての欄に入力してください。";
 "FAILURE_MULTISIG_ACCOUNT_CANNOT_BE_COSIGNER" = "署名者は自分でマルチシグネチャアカウントを開けません。";
 
@@ -123,7 +123,7 @@
 "LANGUAGE" = "言語";
 "LAST_NAME" = "苗字";
 "LOST_CONNECTION" = "接続が切断されています。";
-"LOCKED" = "ロックがかかっています。";
+"LOCKED" = "無効";
 "LAST_HARVESTED_BLOCK" = "最後に収穫した %d ブロック"; // %d will be replaced by the blocks count
 
 // MARK: - M
@@ -240,18 +240,18 @@
 "TOUCH_ID" = "タッチID";
 "TRANSACTION_ANOUNCE_SUCCESS" = "取引は送信されました！";
 "TRANSACTION_ANOUNCE_FAILED" = "取引は拒否されました。 \n 後でもう一度試すか、サーバー接続を確認してください。";
-"TO" = "へ";
+"TO" = "送金先";
 
 // MARK: - U
 
 "UPDATE_INTERVAL" = "更新間隔";
 "UNCONFIRMED_TRANSACTIONS_DETECTED" = "あなたのアカウントには署名が必要な未確認の取引があります！";
-"UNLOCKED" = "ロックを解除する";
+"UNLOCKED" = "有効";
 
 // MARK: - V
 
 "VALIDATION" = "確認";
-"VASTED_BALANCE" = "総合残高";
+"VASTED_BALANCE" = "既得バランス";
 "VIDATION_ACCOUNT_EXIST" = "そのプライベートキー（秘密鍵）によるアカウントは : %@　に存在します。"; // %@ will be replaced by account name
 "VALIDAATION_MESSAGE_LEANGTH" = "メッセージが長すぎます。";
 "VIEW_PRIVATE_KEY" = "プライベートキー（秘密鍵）に関する見解";

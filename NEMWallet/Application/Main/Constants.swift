@@ -1,41 +1,50 @@
-let transferTransaction :Int = 257
-let importanceTransaction :Int = 2049
-let multisigAggregateModificationTransaction :Int = 4097
-let multisigSignatureTransaction :Int = 4098
-let multisigTransaction :Int = 4100
+//
+//  Constants.swift
+//
+//  This file is covered by the LICENSE file in the root of this project.
+//  Copyright (c) 2017 NEM
+//
 
-let testNetwork :UInt8 = 152
-let mainNetwork :UInt8 = 104
-let noNetwork :UInt8 = 0
-let network :UInt8 = mainNetwork
+/**
+    Holds all constants of the application.
+    Change these values to tweak the application.
+ */
+struct Constants {
+    
+    // MARK: - Network Version
 
-let genesis_block_time :Double = 1427587585
-let waitTime :Double = 21600
+    /**
+        Change this constant to switch between the mainnet and testnet.
+        The application only supports one network at a time.
+     
+        Available options:
+        - mainNetwork
+        - testNetwork
+     */
+    static let activeNetwork = mainNetwork
 
-let updateInterval :TimeInterval = 30
- 
-let QR_VERSION = network == testNetwork ? 1 : 2
+    static let testNetwork: UInt8 = 152
+    static let mainNetwork: UInt8 = 104
 
-enum QRKeys: String {
-    case Address = "addr"
-    case Name = "name"
-    case Amount = "amount"
-    case Message = "msg"
-    case DataType = "type"
-    case Data = "data"
-    case PrivateKey = "priv_key"
-    case Salt = "salt"
-    case Version = "v"
-}
+    // MARK: - Timing
 
-enum QRType: Int {
-    case userData = 1
-    case invoice = 2
-    case accountData = 3
-}
+    /**
+        The unix timestamp for the creation of the genesis block, used to calculate the 
+        right timestamps for blocks, transactions, etc.
+     */
+    static let genesisBlockTime = 1427587585.0
 
-enum _MessageType: Int {
-    case normal = 1
-    case ecrypted = 2
-    case hex = 3
+    /// The deadline for new transactions after which they will get invalidated, if their not yet included in a block.
+    static let transactionDeadline = 21600.0
+
+    /// The interval at which content (transactions, account balance, etc.) should get refreshed.
+    static let updateInterval: TimeInterval = 30
+
+    // MARK: - QR Structure
+
+    /**
+        The versions of QR codes, which the application supports.
+        Testnet QR codes are of version 1, mainnet QR codes of version 2.
+     */
+    static let qrVersion = activeNetwork == testNetwork ? 1 : 2
 }

@@ -125,7 +125,7 @@ class AccountExportPasswordViewController: UIViewController {
             encryptedPrivateKey = HashManager.AES256Encrypt(inputText: privateKey, key: passwordHash!.hexadecimalString())
         }
         
-        let jsonData = JSON([QRKeys.DataType.rawValue: QRType.accountData.rawValue, QRKeys.Version.rawValue: QR_VERSION, QRKeys.Data.rawValue: [ QRKeys.Name.rawValue: accountTitle, QRKeys.Salt.rawValue: salt!, QRKeys.PrivateKey.rawValue: encryptedPrivateKey ]])
+        let jsonData = JSON([QRKeys.dataType.rawValue: QRType.accountData.rawValue, QRKeys.version.rawValue: Constants.qrVersion, QRKeys.data.rawValue: [ QRKeys.name.rawValue: accountTitle, QRKeys.salt.rawValue: salt!, QRKeys.privateKey.rawValue: encryptedPrivateKey ]])
         let jsonString = jsonData.rawString()
         
         performSegue(withIdentifier: "showAccountExportViewController", sender: jsonString)

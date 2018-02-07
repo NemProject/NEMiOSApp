@@ -66,7 +66,7 @@ class TransactionOverviewCorrespondentTableViewCell: UITableViewCell {
      */
     fileprivate func getDate(fromTransactionTimeStamp timeStamp: Int) -> String {
         
-        let timeStamp = Double(timeStamp) + genesis_block_time
+        let timeStamp = Double(timeStamp) + Constants.genesisBlockTime
         var date = String()
         
         let dateFormatter = DateFormatter()

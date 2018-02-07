@@ -61,7 +61,7 @@ class InvoiceAccountInfoViewController: UIViewController {
         shareAccountQRCodeButton.setTitle("SHARE_QR".localized(), for: UIControlState())
         copyAccountAddressButton.setTitle("COPY_ADDRESS".localized(), for: UIControlState())
         shareAccountAddressButton.setTitle("SHARE_ADDRESS".localized(), for: UIControlState())
-        editAccountTitleButton.setImage(#imageLiteral(resourceName: "edit_account_icon").imageWithColor(UIColor(red: 90.0/255.0, green: 179.0/255.0, blue: 232.0/255.0, alpha: 1)), for: UIControlState())
+        editAccountTitleButton.setImage(#imageLiteral(resourceName: "Edit").imageWithColor(UIColor(red: 90.0/255.0, green: 179.0/255.0, blue: 232.0/255.0, alpha: 1)), for: UIControlState())
     }
     
     /**
@@ -72,16 +72,15 @@ class InvoiceAccountInfoViewController: UIViewController {
     fileprivate func generateQRCode(forAccount account: Account) {
         
         let accountDictionary: [String: String] = [
-            QRKeys.Address.rawValue: account.address,
-            QRKeys.Name.rawValue: accountTitleTextField.text != "" ? accountTitleTextField.text! : account.title
+            QRKeys.address.rawValue: account.address,
+            QRKeys.name.rawValue: accountTitleTextField.text != "" ? accountTitleTextField.text! : account.title
         ]
         
-        let jsonDictionary = NSDictionary(objects: [QRType.userData.rawValue, accountDictionary, QR_VERSION], forKeys: [QRKeys.DataType.rawValue as NSCopying, QRKeys.Data.rawValue as NSCopying, QRKeys.Version.rawValue as NSCopying])
+        let jsonDictionary = NSDictionary(objects: [QRType.userData.rawValue, accountDictionary, Constants.qrVersion], forKeys: [QRKeys.dataType.rawValue as NSCopying, QRKeys.data.rawValue as NSCopying, QRKeys.version.rawValue as NSCopying])
         
         let jsonData = try! JSONSerialization.data(withJSONObject: jsonDictionary, options: JSONSerialization.WritingOptions.prettyPrinted)
         
-        let qrCodeScannerView = QRCodeScannerView()
-        accountQRCodeImageView.image = qrCodeScannerView.createQRCodeImage(fromCaptureResult: String(data: jsonData, encoding: String.Encoding.utf8)!)
+        accountQRCodeImageView.image = String(data: jsonData, encoding: String.Encoding.utf8)!.createQRCodeImage()
     }
     
     // MARK: - View Controller Outlet Actions

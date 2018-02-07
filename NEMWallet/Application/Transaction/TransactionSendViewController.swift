@@ -40,6 +40,7 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
     
     var recipientAddress: String?
     var amount: Double?
+    var userSetFee: Double?
     var message: String?
     fileprivate var account: Account?
     fileprivate var accountData: AccountData?
@@ -80,6 +81,7 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
         self.navigationBar.delegate = self
         
         transactionSendButton.isEnabled = false
+        transactionFeeTextField.isEnabled = Constants.activeNetwork == Constants.testNetwork ? true : false
         account = AccountManager.sharedInstance.activeAccount
         
         guard account != nil else {
@@ -140,7 +142,7 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
         transactionAmountTextField.placeholder = "ENTER_AMOUNT".localized()
         transactionMessageTextField.placeholder = "EMPTY_MESSAGE".localized()
         transactionFeeTextField.placeholder = "ENTER_FEE".localized()
-        transactionAccountChooserButton.setImage(#imageLiteral(resourceName: "drop_down_arrow_2x").imageWithColor(UIColor(red: 90.0/255.0, green: 179.0/255.0, blue: 232.0/255.0, alpha: 1)), for: UIControlState())
+        transactionAccountChooserButton.setImage(#imageLiteral(resourceName: "DropDown").imageWithColor(UIColor(red: 90.0/255.0, green: 179.0/255.0, blue: 232.0/255.0, alpha: 1)), for: UIControlState())
         
         transactionRecipientTextField.autoCompleteTextFont = UIFont.systemFont(ofSize: 14)
         transactionRecipientTextField.autoCompleteCellHeight = 35.0
@@ -198,7 +200,7 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
      */
     fileprivate func fetchAccountData(forAccount account: Account) {
         
-        nisProvider.request(NIS.accountData(accountAddress: account.address)) { [weak self] (result) in
+        NEMProvider.request(NEM.accountData(accountAddress: account.address)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -246,7 +248,7 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
      */
     fileprivate func fetchAccountData(forAccountWithAddress accountAddress: String) {
         
-        nisProvider.request(NIS.accountData(accountAddress: accountAddress)) { [weak self] (result) in
+        NEMProvider.request(NEM.accountData(accountAddress: accountAddress)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -295,7 +297,7 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
         
         let requestAnnounce = TransactionManager.sharedInstance.signTransaction(transaction, account: account!)
         
-        nisProvider.request(NIS.announceTransaction(requestAnnounce: requestAnnounce)) { [weak self] (result) in
+        NEMProvider.request(NEM.announceTransaction(requestAnnounce: requestAnnounce)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -373,7 +375,6 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
     fileprivate func calculateTransactionFee() {
         
         var transactionAmountString = transactionAmountTextField.text!.replacingOccurrences(of: " ", with: "")
-        transactionAmountString = transactionAmountString.replacingOccurrences(of: ",", with: "")
         var transactionAmount = Double(transactionAmountString) ?? 0.0
 
         if transactionAmount < 0.000001 && transactionAmount != 0 {
@@ -391,12 +392,15 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
         }
 
         let transactionFeeAttributedString = NSMutableAttributedString(string: "\("FEE".localized()): (\("MIN".localized()) ", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 17, weight: UIFontWeightLight)])
-        transactionFeeAttributedString.append(NSMutableAttributedString(string: "\(Int(transactionFee))", attributes: [
+        transactionFeeAttributedString.append(NSMutableAttributedString(string: "\(transactionFee)", attributes: [
             NSForegroundColorAttributeName: UIColor(red: 90.0/255.0, green: 179.0/255.0, blue: 232.0/255.0, alpha: 1),
             NSFontAttributeName: UIFont.systemFont(ofSize: 17)]))
         transactionFeeAttributedString.append(NSMutableAttributedString(string: " XEM)", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 17, weight: UIFontWeightLight)]))
         transactionFeeHeadingLabel.attributedText = transactionFeeAttributedString
-        transactionFeeTextField.text = "\(Int(transactionFee))"
+        
+        if userSetFee == nil || Constants.activeNetwork == Constants.mainNetwork {
+            transactionFeeTextField.text = "\(transactionFee)"
+        }
     }
     
     /**
@@ -415,12 +419,6 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
             transactionMessageByteArray = transactionEncryptedMessageByteArray
         }
         
-        if transactionMessageByteArray.count > 160 {
-            showAlert(withMessage: "VALIDAATION_MESSAGE_LEANGTH".localized())
-            sendingTransaction = false
-            return
-        }
-        
         let transactionMessage = Message(type: willEncrypt ? MessageType.encrypted : MessageType.unencrypted, payload: transactionMessageByteArray, message: transactionMessageTextField.text!)
         
         (preparedTransaction as! TransferTransaction).message = transactionMessage
@@ -428,7 +426,7 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
         // Check if the transaction is a multisig transaction
         if activeAccountData!.publicKey != account!.publicKey {
             
-            let multisigTransaction = MultisigTransaction(version: (preparedTransaction as! TransferTransaction).version, timeStamp: (preparedTransaction as! TransferTransaction).timeStamp, fee: Int(6 * 1000000), deadline: (preparedTransaction as! TransferTransaction).deadline, signer: account!.publicKey, innerTransaction: (preparedTransaction as! TransferTransaction))
+            let multisigTransaction = MultisigTransaction(version: (preparedTransaction as! TransferTransaction).version, timeStamp: (preparedTransaction as! TransferTransaction).timeStamp, fee: Int(0.15 * 1000000), deadline: (preparedTransaction as! TransferTransaction).deadline, signer: account!.publicKey, innerTransaction: (preparedTransaction as! TransferTransaction))
             
             announceTransaction(multisigTransaction!)
             return
@@ -551,13 +549,13 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
         sendingTransaction = true
         
         let transactionVersion = 1
-        let transactionTimeStamp = Int(TimeManager.sharedInstance.timeStamp)
+        let transactionTimeStamp = Int(TimeManager.sharedInstance.currentNetworkTime)
         let transactionAmount = Double(transactionAmountTextField.text!) ?? 0.0
         var transactionFee = Double(transactionFeeTextField.text!) ?? 0.0
         let transactionRecipient = transactionRecipientTextField.text!.replacingOccurrences(of: "-", with: "")
         let transactionMessageText = transactionMessageTextField.text!.hexadecimalStringUsingEncoding(String.Encoding.utf8) ?? String()
         let transactionMessageByteArray: [UInt8] = transactionMessageText.asByteArray()
-        let transactionDeadline = Int(TimeManager.sharedInstance.timeStamp + waitTime)
+        let transactionDeadline = Int(TimeManager.sharedInstance.currentNetworkTime + Constants.transactionDeadline)
         let transactionSigner = activeAccountData!.publicKey
         
         calculateTransactionFee()
@@ -624,6 +622,13 @@ class TransactionSendViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
         calculateTransactionFee()
+    }
+    
+    @IBAction func userDefinedFee(_ sender: UITextField) {
+        
+        if Constants.activeNetwork == Constants.testNetwork {
+            userSetFee = Double(transactionFeeTextField.text!) ?? nil
+        }
     }
     
     @IBAction func textFieldReturnKeyToched(_ sender: UITextField) {

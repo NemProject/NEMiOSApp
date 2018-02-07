@@ -81,19 +81,18 @@ class InvoiceCreatedViewController: UIViewController {
      */
     fileprivate func generateQRCode(forInvoice invoice: Invoice) {
         
-        let invoiceDictionary: [String: String] = [
-            QRKeys.Address.rawValue : invoice.accountAddress,
-            QRKeys.Name.rawValue : invoice.accountTitle,
-            QRKeys.Amount.rawValue : "\(invoice.amount)",
-            QRKeys.Message.rawValue : invoice.message
+        let invoiceDictionary: [String: Any] = [
+            QRKeys.address.rawValue : invoice.accountAddress,
+            QRKeys.name.rawValue : invoice.accountTitle,
+            QRKeys.amount.rawValue : invoice.amount,
+            QRKeys.message.rawValue : invoice.message
         ]
         
-        let jsonDictionary = NSDictionary(objects: [QRType.invoice.rawValue, invoiceDictionary, QR_VERSION], forKeys: [QRKeys.DataType.rawValue as NSCopying, QRKeys.Data.rawValue as NSCopying, QRKeys.Version.rawValue as NSCopying])
+        let jsonDictionary = NSDictionary(objects: [QRType.invoice.rawValue, invoiceDictionary, Constants.qrVersion], forKeys: [QRKeys.dataType.rawValue as NSCopying, QRKeys.data.rawValue as NSCopying, QRKeys.version.rawValue as NSCopying])
         
         let jsonData = try! JSONSerialization.data(withJSONObject: jsonDictionary, options: JSONSerialization.WritingOptions.prettyPrinted)
         
-        let qrCodeScannerView = QRCodeScannerView()
-        invoiceQRCodeImageView.image = qrCodeScannerView.createQRCodeImage(fromCaptureResult: String(data: jsonData, encoding: String.Encoding.utf8)!)
+        invoiceQRCodeImageView.image = String(data: jsonData, encoding: String.Encoding.utf8)!.createQRCodeImage()
     }
     
     // MARK: - View Controller Outlet Actions

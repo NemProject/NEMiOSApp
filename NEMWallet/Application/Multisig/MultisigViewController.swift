@@ -73,7 +73,7 @@ class MultisigViewController: UIViewController {
     fileprivate func updateViewControllerAppearance() {
         
         title = "MULTISIG".localized()
-        multisigAccountChooserButton.setImage(#imageLiteral(resourceName: "drop_down_arrow_2x").imageWithColor(UIColor(red: 90.0/255.0, green: 179.0/255.0, blue: 232.0/255.0, alpha: 1)), for: UIControlState())
+        multisigAccountChooserButton.setImage(#imageLiteral(resourceName: "DropDown").imageWithColor(UIColor(red: 90.0/255.0, green: 179.0/255.0, blue: 232.0/255.0, alpha: 1)), for: UIControlState())
         
         tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
@@ -153,7 +153,7 @@ class MultisigViewController: UIViewController {
      */
     fileprivate func fetchAccountData(forAccount account: Account) {
         
-        nisProvider.request(NIS.accountData(accountAddress: account.address)) { [weak self] (result) in
+        NEMProvider.request(NEM.accountData(accountAddress: account.address)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -216,7 +216,7 @@ class MultisigViewController: UIViewController {
         addedCosignatories = [String]()
         removedCosignatories = [String]()
         
-        nisProvider.request(NIS.accountData(accountAddress: accountData.address)) { [weak self] (result) in
+        NEMProvider.request(NEM.accountData(accountAddress: accountData.address)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -277,7 +277,7 @@ class MultisigViewController: UIViewController {
         
         let requestAnnounce = TransactionManager.sharedInstance.signTransaction(transaction, account: account!)
         
-        nisProvider.request(NIS.announceTransaction(requestAnnounce: requestAnnounce)) { [weak self] (result) in
+        NEMProvider.request(NEM.announceTransaction(requestAnnounce: requestAnnounce)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -451,21 +451,17 @@ class MultisigViewController: UIViewController {
         }
         
         let transactionVersion = 2
-        let transactionTimeStamp = Int(TimeManager.sharedInstance.timeStamp)
-        var transactionFee = 10 + 6 * (addedCosignatories.count + removedCosignatories.count)
+        let transactionTimeStamp = Int(TimeManager.sharedInstance.currentNetworkTime)
+        var transactionFee = 0.5
         let transactionRelativeChange = relativeChange
-        let transactionDeadline = Int(TimeManager.sharedInstance.timeStamp + waitTime)
-        
-        if relativeChange != 0 {
-            transactionFee += 6
-        }
-        
+        let transactionDeadline = Int(TimeManager.sharedInstance.currentNetworkTime + Constants.transactionDeadline)
+                
         var transactionSigner = activeAccountData!.publicKey
         if activeAccountData!.cosignatories.count == 0 {
             transactionSigner = account!.publicKey
         }
         
-        let transaction = MultisigAggregateModificationTransaction(version: transactionVersion, timeStamp: transactionTimeStamp, fee: transactionFee * 1000000, relativeChange: transactionRelativeChange, deadline: transactionDeadline, signer: transactionSigner!)
+        let transaction = MultisigAggregateModificationTransaction(version: transactionVersion, timeStamp: transactionTimeStamp, fee: Int(transactionFee * 1000000), relativeChange: transactionRelativeChange, deadline: transactionDeadline, signer: transactionSigner!)
         
         for cosignatoryAccount in addedCosignatories {
             transaction!.addModification(.addCosignatory, cosignatoryAccount: cosignatoryAccount)
@@ -478,7 +474,7 @@ class MultisigViewController: UIViewController {
         // Check if the transaction is a multisig transaction
         if activeAccountData!.publicKey != account!.publicKey {
             
-            let multisigTransaction = MultisigTransaction(version: 1, timeStamp: transactionTimeStamp, fee: Int(6 * 1000000), deadline: transactionDeadline, signer: account!.publicKey, innerTransaction: transaction!)
+            let multisigTransaction = MultisigTransaction(version: 1, timeStamp: transactionTimeStamp, fee: Int(0.15 * 1000000), deadline: transactionDeadline, signer: account!.publicKey, innerTransaction: transaction!)
             
             announceTransaction(multisigTransaction!)
             return

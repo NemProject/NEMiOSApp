@@ -196,7 +196,7 @@ class TransactionOverviewViewController: UIViewController {
     /// Starts refreshing the transaction overview in the defined interval.
     fileprivate func startRefreshing() {
         
-        refreshTimer = Timer.scheduledTimer(timeInterval: TimeInterval(updateInterval), target: self, selector: #selector(TransactionOverviewViewController.refreshTransactionOverview), userInfo: nil, repeats: true)
+        refreshTimer = Timer.scheduledTimer(timeInterval: TimeInterval(Constants.updateInterval), target: self, selector: #selector(TransactionOverviewViewController.refreshTransactionOverview), userInfo: nil, repeats: true)
     }
     
     /// Stops refreshing the transaction overview.
@@ -239,7 +239,7 @@ class TransactionOverviewViewController: UIViewController {
 
         transactionOverviewDispatchGroup.enter()
         
-        nisProvider.request(NIS.accountData(accountAddress: account.address)) { [weak self] (result) in
+        NEMProvider.request(NEM.accountData(accountAddress: account.address)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -299,7 +299,7 @@ class TransactionOverviewViewController: UIViewController {
         
         transactionOverviewDispatchGroup.enter()
         
-        nisProvider.request(NIS.allTransactions(accountAddress: account.address, server: nil)) { [weak self] (result) in
+        NEMProvider.request(NEM.confirmedTransactions(accountAddress: account.address, server: nil)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -381,7 +381,7 @@ class TransactionOverviewViewController: UIViewController {
         
         transactionOverviewDispatchGroup.enter()
         
-        nisProvider.request(NIS.unconfirmedTransactions(accountAddress: account.address, server: nil)) { [weak self] (result) in
+        NEMProvider.request(NEM.unconfirmedTransactions(accountAddress: account.address, server: nil)) { [weak self] (result) in
             
             var needToSign = false
             

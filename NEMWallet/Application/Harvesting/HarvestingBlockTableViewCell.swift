@@ -41,7 +41,7 @@ class HarvestingBlockTableViewCell: UITableViewCell {
         dateFormatter.dateFormat = "MMM dd, YYYY H:mm:ss"
 
         var blockTimeStamp = Double(block!.timeStamp)
-        blockTimeStamp += genesis_block_time
+        blockTimeStamp += Constants.genesisBlockTime
 
         blockTimeStampLabel.text = dateFormatter.string(from: Date(timeIntervalSince1970: blockTimeStamp))
         blockIDLabel.text = "\("BLOCK".localized()) #\(block!.id!)"

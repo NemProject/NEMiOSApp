@@ -48,27 +48,29 @@ open class InvoiceManager {
      
         - Returns: The result of the operation - success or failure.
      */
-    open func createInvoice(withAccountTitle accountTitle: String, andAccountAddress accountAddress: String, andAmount amount: Int, andMessage message: String, completion: @escaping (_ result: Result, _ invoice: Invoice) -> Void) {
+    open func createInvoice(withAccountTitle accountTitle: String, andAccountAddress accountAddress: String, andAmount amount: Int, andMessage message: String, completion: @escaping (_ result: Result, _ invoice: Invoice?) -> Void) {
         
-        DatabaseManager.sharedInstance.dataStack.beginAsynchronous { (transaction) -> Void in
+        DatabaseManager.sharedInstance.dataStack.perform(
+            asynchronous: { (transaction) -> Invoice in
             
-            let invoice = transaction.create(Into(Invoice.self))
-            invoice.accountTitle = accountTitle
-            invoice.accountAddress = accountAddress
-            invoice.amount = amount as NSNumber
-            invoice.message = message
-            invoice.id = self.idForNewInvoice() as NSNumber
-            
-            transaction.commit { (result) -> Void in
-                switch result {
-                case .success( _):
-                    return completion(.success, invoice)
-                    
-                case .failure( _):
-                    return completion(.failure, invoice)
-                }
+                let invoice = transaction.create(Into(Invoice.self))
+                invoice.accountTitle = accountTitle
+                invoice.accountAddress = accountAddress
+                invoice.amount = amount as NSNumber
+                invoice.message = message
+                invoice.id = self.idForNewInvoice() as NSNumber
+                
+                return invoice
+            },
+            success: { (invoiceTransaction) in
+                
+                let invoice = DatabaseManager.sharedInstance.dataStack.fetchExisting(invoiceTransaction)!
+                return completion(.success, invoice)
+            },
+            failure: { (error) in
+                return completion(.failure, nil)
             }
-        }
+        )
     }
     
     // MARK: - Private Manager Methods

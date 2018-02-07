@@ -76,9 +76,7 @@ class AccountExportViewController: UIViewController {
         - Parameter accountJsonString: The account export json string for which the QR code should get generated.
      */
     fileprivate func generateQRCode(forAccount accountJsonString: String) {
-        
-        let qrCodeScannerView = QRCodeScannerView()
-        exportQRCodeImageView.image = qrCodeScannerView.createQRCodeImage(fromCaptureResult: accountJsonString)
+        exportQRCodeImageView.image = accountJsonString.createQRCodeImage()
     }
     
     // MARK: - View Controller Outlet Actions

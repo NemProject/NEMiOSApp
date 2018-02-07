@@ -18,7 +18,6 @@
 		4F0B5F091DAFD4A900E182C3 /* AutoCompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0B5F081DAFD4A900E182C3 /* AutoCompleteTextField.swift */; };
 		4F0B5F0C1DAFD4EB00E182C3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0B5F0B1DAFD4EB00E182C3 /* DatabaseManager.swift */; };
 		4F0B5F0E1DAFD50700E182C3 /* MultisigSignatureTransaction+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0B5F0D1DAFD50700E182C3 /* MultisigSignatureTransaction+Additions.swift */; };
-		4F1159DC1D38FC5800E13EE0 /* NemIOSClientUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1159DB1D38FC5800E13EE0 /* NemIOSClientUITests.swift */; };
 		4F136CAF1D9A750D0042504C /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F136CAE1D9A750D0042504C /* SettingsManager.swift */; };
 		4F15DCA41DA27B5C0042997C /* KeychainSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F15DCA31DA27B5C0042997C /* KeychainSwift.framework */; };
 		4F15DCA51DA27B5C0042997C /* KeychainSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F15DCA31DA27B5C0042997C /* KeychainSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -51,10 +50,15 @@
 		4F45BF051D99E00E00E90618 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F45BF041D99E00E00E90618 /* ReactiveSwift.framework */; };
 		4F45BF061D99E00E00E90618 /* ReactiveSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F45BF041D99E00E00E90618 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F540AA21D85E72600CA5385 /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F540AA11D85E72600CA5385 /* TimeManager.swift */; };
-		4F63E36A1D5E03D100BCFFA4 /* NetworkingEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F63E3691D5E03D100BCFFA4 /* NetworkingEndpoints.swift */; };
+		4F63E36A1D5E03D100BCFFA4 /* NemAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F63E3691D5E03D100BCFFA4 /* NemAPI.swift */; };
 		4F63E36D1D5E192500BCFFA4 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F63E36B1D5E18CF00BCFFA4 /* Result.framework */; };
 		4F63E36E1D5E192500BCFFA4 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F63E36B1D5E18CF00BCFFA4 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F675F331D50A00800F1BDD5 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F675F321D50A00800F1BDD5 /* AccountManager.swift */; };
+		4F76D0591F2657E000D9694D /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9F67791D48EF4A0086F98F /* Quick.framework */; };
+		4F76D05A1F2657E000D9694D /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9F67781D48EF4A0086F98F /* Nimble.framework */; };
+		4F76D05C1F2657F700D9694D /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F9F67781D48EF4A0086F98F /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F76D05D1F2657F700D9694D /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F9F67791D48EF4A0086F98F /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F76D0611F265E6500D9694D /* AccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F76D0601F265E6500D9694D /* AccountTests.swift */; };
 		4F850F141D4C3BF00003E192 /* HashManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F850F131D4C3BF00003E192 /* HashManager.swift */; };
 		4F850F171D4C3C930003E192 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F850F161D4C3C930003E192 /* NSData+Base64.m */; };
 		4F850F1B1D4C3D240003E192 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F850F1A1D4C3D240003E192 /* Crypto.m */; };
@@ -64,6 +68,16 @@
 		4F850F241D4C3DD40003E192 /* RIPEMD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F850F231D4C3DD40003E192 /* RIPEMD.swift */; };
 		4F850F261D4C3DD90003E192 /* RIPEMD+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F850F251D4C3DD90003E192 /* RIPEMD+Block.swift */; };
 		4F850F281D4C3DE00003E192 /* UInt32+CircularShift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F850F271D4C3DE00003E192 /* UInt32+CircularShift.swift */; };
+		4F86A0901F0E84E400132F8C /* Settings.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F86A08F1F0E84E400132F8C /* Settings.xcassets */; };
+		4F86A0921F0E852700132F8C /* Logo.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F86A0911F0E852700132F8C /* Logo.xcassets */; };
+		4F86A0941F0E857100132F8C /* Export.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F86A0931F0E857100132F8C /* Export.xcassets */; };
+		4F86A0961F0E85C300132F8C /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F86A0951F0E85C300132F8C /* AppIcon.xcassets */; };
+		4F86A0981F0E869400132F8C /* AddressBook.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F86A0971F0E869400132F8C /* AddressBook.xcassets */; };
+		4F86A09A1F0E86ED00132F8C /* ActionBar.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F86A0991F0E86ED00132F8C /* ActionBar.xcassets */; };
+		4F86A09C1F0E873400132F8C /* AccountAddition.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F86A09B1F0E873400132F8C /* AccountAddition.xcassets */; };
+		4F86A09E1F0E8A3000132F8C /* TabBar.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F86A09D1F0E8A3000132F8C /* TabBar.xcassets */; };
+		4F86A0A01F0E8AC200132F8C /* Transaction.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F86A09F1F0E8AC200132F8C /* Transaction.xcassets */; };
+		4F86A0A21F0FB5A200132F8C /* QRModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F86A0A11F0FB5A200132F8C /* QRModel.swift */; };
 		4F98280F1D3CEFBE00A3C8B2 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9828071D3CEB3400A3C8B2 /* Alamofire.framework */; };
 		4F9828101D3CEFBE00A3C8B2 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9828071D3CEB3400A3C8B2 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F9828111D3CEFBE00A3C8B2 /* AlamofireNetworkActivityIndicator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9828081D3CEB3400A3C8B2 /* AlamofireNetworkActivityIndicator.framework */; };
@@ -72,24 +86,17 @@
 		4F9828141D3CEFBE00A3C8B2 /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9828091D3CEB3400A3C8B2 /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F9828151D3CEFBE00A3C8B2 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F98280A1D3CEB3500A3C8B2 /* SwiftyJSON.framework */; };
 		4F9828161D3CEFBE00A3C8B2 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F98280A1D3CEB3500A3C8B2 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F9D544D1F62F21C00A80CBE /* CIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9D544C1F62F21C00A80CBE /* CIImage+Additions.swift */; };
 		4F9F67861D48F43D0086F98F /* CoreStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9F676C1D48EC6C0086F98F /* CoreStore.framework */; };
 		4F9F67871D48F43D0086F98F /* CoreStore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9F676C1D48EC6C0086F98F /* CoreStore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F9F679E1D48FCF00086F98F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9F67781D48EF4A0086F98F /* Nimble.framework */; };
-		4F9F679F1D48FCF30086F98F /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9F67791D48EF4A0086F98F /* Quick.framework */; };
-		4F9F67A21D48FD180086F98F /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F9F67781D48EF4A0086F98F /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F9F67A31D48FD180086F98F /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F9F67791D48EF4A0086F98F /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F9F67A41D48FD340086F98F /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9F67781D48EF4A0086F98F /* Nimble.framework */; };
-		4F9F67A51D48FD370086F98F /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9F67791D48EF4A0086F98F /* Quick.framework */; };
-		4F9F67A71D48FD440086F98F /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F9F67781D48EF4A0086F98F /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F9F67A81D48FD460086F98F /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F9F67791D48EF4A0086F98F /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F9F67A91D48FE460086F98F /* Moya.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9F67691D48EB4A0086F98F /* Moya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F9F67EA1D4C31080086F98F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F67E91D4C31080086F98F /* AppDelegate.swift */; };
 		4F9F67EE1D4C31140086F98F /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F67ED1D4C31140086F98F /* NavigationController.swift */; };
 		4F9F67F01D4C311C0086F98F /* MoreMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F67EF1D4C311C0086F98F /* MoreMenuViewController.swift */; };
 		4F9F67F21D4C31300086F98F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F9F67F11D4C31300086F98F /* Main.storyboard */; };
 		4F9F68041D4C33140086F98F /* AuthenticationPasswordCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F68031D4C33140086F98F /* AuthenticationPasswordCreationViewController.swift */; };
-		4F9F68061D4C33240086F98F /* AuthenticationPasswordValidationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F68051D4C33240086F98F /* AuthenticationPasswordValidationViewController.swift */; };
-		4F9F68081D4C33490086F98F /* AccountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F68071D4C33490086F98F /* AccountListViewController.swift */; };
+		4F9F68061D4C33240086F98F /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F68051D4C33240086F98F /* AuthenticationViewController.swift */; };
+		4F9F68081D4C33490086F98F /* WalletOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F68071D4C33490086F98F /* WalletOverviewViewController.swift */; };
 		4F9F680A1D4C33510086F98F /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F68091D4C33510086F98F /* AccountTableViewCell.swift */; };
 		4F9F680E1D4C33630086F98F /* AccountAdditionMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F680D1D4C33630086F98F /* AccountAdditionMenuViewController.swift */; };
 		4F9F68101D4C336C0086F98F /* AccountAdditionMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F680F1D4C336C0086F98F /* AccountAdditionMenuButton.swift */; };
@@ -128,10 +135,8 @@
 		4F9F68761D4C37B90086F98F /* SettingsChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F68751D4C37B90086F98F /* SettingsChangePasswordViewController.swift */; };
 		4F9F68781D4C37BF0086F98F /* SettingsServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F68771D4C37BF0086F98F /* SettingsServerViewController.swift */; };
 		4F9F687A1D4C37C40086F98F /* SettingsAddServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F68791D4C37C40086F98F /* SettingsAddServerViewController.swift */; };
-		4F9F687C1D4C37C80086F98F /* SettingsNotificationIntervalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F687B1D4C37C80086F98F /* SettingsNotificationIntervalViewController.swift */; };
-		4F9F687E1D4C38280086F98F /* QRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F687D1D4C38280086F98F /* QRCodeScannerView.swift */; };
+		4F9F687E1D4C38280086F98F /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F687D1D4C38280086F98F /* QRScannerView.swift */; };
 		4F9F68861D4C39220086F98F /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9F68851D4C39220086F98F /* UIImage+Additions.swift */; };
-		4F9F68981D4C39DF0086F98F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F9F68971D4C39DF0086F98F /* Images.xcassets */; };
 		4FA5B5821D81B86F00B1F907 /* TransactionExceptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA5B5811D81B86F00B1F907 /* TransactionExceptions.swift */; };
 		4FA825CE1D9995E10095C97C /* MultisigCosignatoryModificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA825CD1D9995E10095C97C /* MultisigCosignatoryModificationModel.swift */; };
 		4FA92FC71D7093A800C9477B /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA92FC61D7093A800C9477B /* KeyboardLayoutConstraint.swift */; };
@@ -161,28 +166,31 @@
 		98BB95DD1BCCED5B002151F7 /* sign.c in Sources */ = {isa = PBXBuildFile; fileRef = 98BB95CB1BCCED5B002151F7 /* sign.c */; };
 		98BB95DE1BCCED5B002151F7 /* verify.c in Sources */ = {isa = PBXBuildFile; fileRef = 98BB95CC1BCCED5B002151F7 /* verify.c */; };
 		98BB95E11BCCEDB6002151F7 /* generator.c in Sources */ = {isa = PBXBuildFile; fileRef = 98BB95E01BCCEDB6002151F7 /* generator.c */; };
-		DA35581F1A39D3BC00AFA5FD /* NemIOSClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35581E1A39D3BC00AFA5FD /* NemIOSClientTests.swift */; };
 		DADDA24D1B21D17800F3F5F5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADDA24C1B21D17800F3F5F5 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4F1159DE1D38FC5800E13EE0 /* PBXContainerItemProxy */ = {
+		4F76D0541F2657AD00D9694D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DA3557F81A39D3B900AFA5FD /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = DA3557FF1A39D3B900AFA5FD;
-			remoteInfo = NemIOSClient;
-		};
-		DA3558191A39D3BC00AFA5FD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DA3557F81A39D3B900AFA5FD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DA3557FF1A39D3B900AFA5FD;
-			remoteInfo = NemIOSClient;
+			remoteInfo = NEMWallet;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4F76D05B1F2657E900D9694D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4F76D05C1F2657F700D9694D /* Nimble.framework in CopyFiles */,
+				4F76D05D1F2657F700D9694D /* Quick.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F9828171D3CEFBF00A3C8B2 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -203,31 +211,10 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F9F67A11D48FD0B0086F98F /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4F9F67A21D48FD180086F98F /* Nimble.framework in CopyFiles */,
-				4F9F67A31D48FD180086F98F /* Quick.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4F9F67A61D48FD3E0086F98F /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4F9F67A71D48FD440086F98F /* Nimble.framework in CopyFiles */,
-				4F9F67A81D48FD460086F98F /* Quick.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F01CDAC1FC715D6003F192D /* NEMWallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NEMWallet.entitlements; sourceTree = "<group>"; };
 		4F0B5EF81DAFCA7200E182C3 /* NEMWallet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NEMWallet.xcdatamodel; sourceTree = "<group>"; };
 		4F0B5EFA1DAFD34C00E182C3 /* SettingsServerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsServerTableViewCell.swift; sourceTree = "<group>"; };
 		4F0B5EFC1DAFD38500E182C3 /* DetailedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedTableViewCell.swift; sourceTree = "<group>"; };
@@ -240,9 +227,6 @@
 		4F0B5F0A1DAFD4D700E182C3 /* NemIOSClient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NemIOSClient.entitlements; sourceTree = "<group>"; };
 		4F0B5F0B1DAFD4EB00E182C3 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		4F0B5F0D1DAFD50700E182C3 /* MultisigSignatureTransaction+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MultisigSignatureTransaction+Additions.swift"; sourceTree = "<group>"; };
-		4F1159D91D38FC5700E13EE0 /* NEMWalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NEMWalletUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F1159DB1D38FC5800E13EE0 /* NemIOSClientUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NemIOSClientUITests.swift; sourceTree = "<group>"; };
-		4F1159DD1D38FC5800E13EE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F136CAE1D9A750D0042504C /* SettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		4F15DCA31DA27B5C0042997C /* KeychainSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeychainSwift.framework; path = Carthage/Build/iOS/KeychainSwift.framework; sourceTree = "<group>"; };
 		4F15DCA61DA294400042997C /* ServerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerModel.swift; sourceTree = "<group>"; };
@@ -272,9 +256,12 @@
 		4F3B428B1D59CF100067E3D3 /* AccountAdditionMenuPasswordValidationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountAdditionMenuPasswordValidationViewController.swift; sourceTree = "<group>"; };
 		4F45BF041D99E00E00E90618 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
 		4F540AA11D85E72600CA5385 /* TimeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
-		4F63E3691D5E03D100BCFFA4 /* NetworkingEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingEndpoints.swift; sourceTree = "<group>"; };
+		4F63E3691D5E03D100BCFFA4 /* NemAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NemAPI.swift; sourceTree = "<group>"; };
 		4F63E36B1D5E18CF00BCFFA4 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		4F675F321D50A00800F1BDD5 /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
+		4F76D04F1F2657AD00D9694D /* NEMWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NEMWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F76D0531F2657AD00D9694D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F76D0601F265E6500D9694D /* AccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountTests.swift; sourceTree = "<group>"; };
 		4F850F131D4C3BF00003E192 /* HashManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashManager.swift; sourceTree = "<group>"; };
 		4F850F151D4C3C8F0003E192 /* NSData+Base64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		4F850F161D4C3C930003E192 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
@@ -287,10 +274,21 @@
 		4F850F231D4C3DD40003E192 /* RIPEMD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RIPEMD.swift; sourceTree = "<group>"; };
 		4F850F251D4C3DD90003E192 /* RIPEMD+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RIPEMD+Block.swift"; sourceTree = "<group>"; };
 		4F850F271D4C3DE00003E192 /* UInt32+CircularShift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UInt32+CircularShift.swift"; sourceTree = "<group>"; };
+		4F86A08F1F0E84E400132F8C /* Settings.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Settings.xcassets; sourceTree = "<group>"; };
+		4F86A0911F0E852700132F8C /* Logo.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Logo.xcassets; sourceTree = "<group>"; };
+		4F86A0931F0E857100132F8C /* Export.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Export.xcassets; sourceTree = "<group>"; };
+		4F86A0951F0E85C300132F8C /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
+		4F86A0971F0E869400132F8C /* AddressBook.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AddressBook.xcassets; sourceTree = "<group>"; };
+		4F86A0991F0E86ED00132F8C /* ActionBar.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ActionBar.xcassets; sourceTree = "<group>"; };
+		4F86A09B1F0E873400132F8C /* AccountAddition.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AccountAddition.xcassets; sourceTree = "<group>"; };
+		4F86A09D1F0E8A3000132F8C /* TabBar.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TabBar.xcassets; sourceTree = "<group>"; };
+		4F86A09F1F0E8AC200132F8C /* Transaction.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Transaction.xcassets; sourceTree = "<group>"; };
+		4F86A0A11F0FB5A200132F8C /* QRModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRModel.swift; sourceTree = "<group>"; };
 		4F9828071D3CEB3400A3C8B2 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		4F9828081D3CEB3400A3C8B2 /* AlamofireNetworkActivityIndicator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireNetworkActivityIndicator.framework; path = Carthage/Build/iOS/AlamofireNetworkActivityIndicator.framework; sourceTree = "<group>"; };
 		4F9828091D3CEB3400A3C8B2 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 		4F98280A1D3CEB3500A3C8B2 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		4F9D544C1F62F21C00A80CBE /* CIImage+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CIImage+Additions.swift"; sourceTree = "<group>"; };
 		4F9F67691D48EB4A0086F98F /* Moya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Moya.framework; path = Carthage/Build/iOS/Moya.framework; sourceTree = "<group>"; };
 		4F9F676C1D48EC6C0086F98F /* CoreStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreStore.framework; path = Carthage/Build/iOS/CoreStore.framework; sourceTree = "<group>"; };
 		4F9F67781D48EF4A0086F98F /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -300,8 +298,8 @@
 		4F9F67EF1D4C311C0086F98F /* MoreMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreMenuViewController.swift; sourceTree = "<group>"; };
 		4F9F67F11D4C31300086F98F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4F9F68031D4C33140086F98F /* AuthenticationPasswordCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationPasswordCreationViewController.swift; sourceTree = "<group>"; };
-		4F9F68051D4C33240086F98F /* AuthenticationPasswordValidationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationPasswordValidationViewController.swift; sourceTree = "<group>"; };
-		4F9F68071D4C33490086F98F /* AccountListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountListViewController.swift; sourceTree = "<group>"; };
+		4F9F68051D4C33240086F98F /* AuthenticationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
+		4F9F68071D4C33490086F98F /* WalletOverviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletOverviewViewController.swift; sourceTree = "<group>"; };
 		4F9F68091D4C33510086F98F /* AccountTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
 		4F9F680D1D4C33630086F98F /* AccountAdditionMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountAdditionMenuViewController.swift; sourceTree = "<group>"; };
 		4F9F680F1D4C336C0086F98F /* AccountAdditionMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountAdditionMenuButton.swift; sourceTree = "<group>"; };
@@ -340,10 +338,8 @@
 		4F9F68751D4C37B90086F98F /* SettingsChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsChangePasswordViewController.swift; sourceTree = "<group>"; };
 		4F9F68771D4C37BF0086F98F /* SettingsServerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsServerViewController.swift; sourceTree = "<group>"; };
 		4F9F68791D4C37C40086F98F /* SettingsAddServerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAddServerViewController.swift; sourceTree = "<group>"; };
-		4F9F687B1D4C37C80086F98F /* SettingsNotificationIntervalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNotificationIntervalViewController.swift; sourceTree = "<group>"; };
-		4F9F687D1D4C38280086F98F /* QRCodeScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerView.swift; sourceTree = "<group>"; };
+		4F9F687D1D4C38280086F98F /* QRScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
 		4F9F68851D4C39220086F98F /* UIImage+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Additions.swift"; sourceTree = "<group>"; };
-		4F9F68971D4C39DF0086F98F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4F9F689D1D4C3A160086F98F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FA5B5811D81B86F00B1F907 /* TransactionExceptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionExceptions.swift; sourceTree = "<group>"; };
 		4FA825CD1D9995E10095C97C /* MultisigCosignatoryModificationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultisigCosignatoryModificationModel.swift; sourceTree = "<group>"; };
@@ -397,19 +393,16 @@
 		98BB95E01BCCEDB6002151F7 /* generator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = generator.c; sourceTree = "<group>"; };
 		98F01CC41C2D6E5C0018081B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DA3558001A39D3B900AFA5FD /* NEMWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NEMWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA3558181A39D3BC00AFA5FD /* NEMWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NEMWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA35581D1A39D3BC00AFA5FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA35581E1A39D3BC00AFA5FD /* NemIOSClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NemIOSClientTests.swift; sourceTree = "<group>"; };
 		DADDA24C1B21D17800F3F5F5 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4F1159D61D38FC5700E13EE0 /* Frameworks */ = {
+		4F76D04C1F2657AD00D9694D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F9F67A41D48FD340086F98F /* Nimble.framework in Frameworks */,
-				4F9F67A51D48FD370086F98F /* Quick.framework in Frameworks */,
+				4F76D0591F2657E000D9694D /* Quick.framework in Frameworks */,
+				4F76D05A1F2657E000D9694D /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,37 +422,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DA3558151A39D3BC00AFA5FD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4F9F679E1D48FCF00086F98F /* Nimble.framework in Frameworks */,
-				4F9F679F1D48FCF30086F98F /* Quick.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4F1159D41D38FC1300E13EE0 /* Common */ = {
+		4F1159D41D38FC1300E13EE0 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				4F483E011F167B3A008C3C91 /* Controllers */,
 				4F9F67B41D4A02730086F98F /* Views */,
 				DA3DD8A61A6E9DC400B45BF5 /* Cells */,
 				DA031ED71A9226E60021E98B /* Textfields */,
 				4F1159E91D38FF8C00E13EE0 /* Extensions */,
 				4F24A1741D54E43C00AC128A /* Exceptions */,
 			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		4F1159DA1D38FC5800E13EE0 /* NEMWalletUITests */ = {
-			isa = PBXGroup;
-			children = (
-				4F1159DB1D38FC5800E13EE0 /* NemIOSClientUITests.swift */,
-				4F9F67AB1D4910A20086F98F /* Supporting Files */,
-			);
-			path = NEMWalletUITests;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		4F1159E31D38FDDB00E13EE0 /* Property Lists */ = {
@@ -483,18 +459,26 @@
 		4F1159E51D38FE9E00E13EE0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				4F9F68971D4C39DF0086F98F /* Images.xcassets */,
+				4F86A0951F0E85C300132F8C /* AppIcon.xcassets */,
+				4F86A0911F0E852700132F8C /* Logo.xcassets */,
+				4F86A09D1F0E8A3000132F8C /* TabBar.xcassets */,
+				4F86A0991F0E86ED00132F8C /* ActionBar.xcassets */,
+				4F86A09B1F0E873400132F8C /* AccountAddition.xcassets */,
+				4F86A09F1F0E8AC200132F8C /* Transaction.xcassets */,
+				4F86A0971F0E869400132F8C /* AddressBook.xcassets */,
+				4F86A0931F0E857100132F8C /* Export.xcassets */,
+				4F86A08F1F0E84E400132F8C /* Settings.xcassets */,
 			);
 			path = Images;
 			sourceTree = "<group>";
 		};
-		4F1159E61D38FEA900E13EE0 /* Databases */ = {
+		4F1159E61D38FEA900E13EE0 /* Database */ = {
 			isa = PBXGroup;
 			children = (
 				4F0B5F0B1DAFD4EB00E182C3 /* DatabaseManager.swift */,
 				4F0B5EF71DAFCA7200E182C3 /* NEMWallet.xcdatamodeld */,
 			);
-			path = Databases;
+			path = Database;
 			sourceTree = "<group>";
 		};
 		4F1159E91D38FF8C00E13EE0 /* Extensions */ = {
@@ -516,6 +500,7 @@
 				4F0B5F021DAFD41000E182C3 /* Double+Additions.swift */,
 				4F0B5F041DAFD41800E182C3 /* NSData+Additions.swift */,
 				64F22B8C1EE67B9700780900 /* UIViewController+Additions.swift */,
+				4F9D544C1F62F21C00A80CBE /* CIImage+Additions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -530,10 +515,27 @@
 			path = Exceptions;
 			sourceTree = "<group>";
 		};
+		4F483E011F167B3A008C3C91 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4F9F67ED1D4C31140086F98F /* NavigationController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4F76D0501F2657AD00D9694D /* NEMWalletTests */ = {
+			isa = PBXGroup;
+			children = (
+				4F76D0601F265E6500D9694D /* AccountTests.swift */,
+				4F76D0531F2657AD00D9694D /* Info.plist */,
+			);
+			path = NEMWalletTests;
+			sourceTree = "<group>";
+		};
 		4F9827FE1D3CCFE900A3C8B2 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				4F9F68051D4C33240086F98F /* AuthenticationPasswordValidationViewController.swift */,
+				4F9F68051D4C33240086F98F /* AuthenticationViewController.swift */,
 				4F9F68031D4C33140086F98F /* AuthenticationPasswordCreationViewController.swift */,
 			);
 			path = Authentication;
@@ -542,7 +544,7 @@
 		4F9827FF1D3CD0AE00A3C8B2 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				4F63E3691D5E03D100BCFFA4 /* NetworkingEndpoints.swift */,
+				4F63E3691D5E03D100BCFFA4 /* NemAPI.swift */,
 				4F540AA11D85E72600CA5385 /* TimeManager.swift */,
 			);
 			path = Networking;
@@ -552,7 +554,7 @@
 			isa = PBXGroup;
 			children = (
 				4F675F321D50A00800F1BDD5 /* AccountManager.swift */,
-				4F9F68071D4C33490086F98F /* AccountListViewController.swift */,
+				4F9F68071D4C33490086F98F /* WalletOverviewViewController.swift */,
 				4F0B5F061DAFD44D00E182C3 /* AccountDetailTabBarController.swift */,
 				4F9F680D1D4C33630086F98F /* AccountAdditionMenuViewController.swift */,
 				4F9F680F1D4C336C0086F98F /* AccountAdditionMenuButton.swift */,
@@ -640,7 +642,6 @@
 				4F9F68771D4C37BF0086F98F /* SettingsServerViewController.swift */,
 				4F0B5EFA1DAFD34C00E182C3 /* SettingsServerTableViewCell.swift */,
 				4F9F68791D4C37C40086F98F /* SettingsAddServerViewController.swift */,
-				4F9F687B1D4C37C80086F98F /* SettingsNotificationIntervalViewController.swift */,
 				4F15DCA81DA2A9E20042997C /* SettingsOptionTableViewCell.swift */,
 			);
 			path = Settings;
@@ -654,18 +655,10 @@
 			path = Notification;
 			sourceTree = "<group>";
 		};
-		4F9F67AB1D4910A20086F98F /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4F1159DD1D38FC5800E13EE0 /* Info.plist */,
-			);
-			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		4F9F67B41D4A02730086F98F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4F9F687D1D4C38280086F98F /* QRCodeScannerView.swift */,
+				4F9F687D1D4C38280086F98F /* QRScannerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -776,8 +769,7 @@
 			isa = PBXGroup;
 			children = (
 				DA3558021A39D3B900AFA5FD /* NEMWallet */,
-				DA35581B1A39D3BC00AFA5FD /* NEMWalletTests */,
-				4F1159DA1D38FC5800E13EE0 /* NEMWalletUITests */,
+				4F76D0501F2657AD00D9694D /* NEMWalletTests */,
 				DA64A4D21A5A892D005833A4 /* Frameworks */,
 				DA3558011A39D3B900AFA5FD /* Products */,
 			);
@@ -788,8 +780,7 @@
 			isa = PBXGroup;
 			children = (
 				DA3558001A39D3B900AFA5FD /* NEMWallet.app */,
-				DA3558181A39D3BC00AFA5FD /* NEMWalletTests.xctest */,
-				4F1159D91D38FC5700E13EE0 /* NEMWalletUITests.xctest */,
+				4F76D04F1F2657AD00D9694D /* NEMWalletTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -797,9 +788,10 @@
 		DA3558021A39D3B900AFA5FD /* NEMWallet */ = {
 			isa = PBXGroup;
 			children = (
+				4F01CDAC1FC715D6003F192D /* NEMWallet.entitlements */,
 				DA35583B1A3ADFD200AFA5FD /* Models */,
 				DA35582C1A39D76200AFA5FD /* Application */,
-				4F1159D41D38FC1300E13EE0 /* Common */,
+				4F1159D41D38FC1300E13EE0 /* Shared */,
 				DA4369CF1A6411B800868BAD /* Assets */,
 			);
 			path = NEMWallet;
@@ -813,23 +805,6 @@
 				4FA92FC61D7093A800C9477B /* KeyboardLayoutConstraint.swift */,
 				DA194E051A431C690030C882 /* Cryptography */,
 				644160CA1EF8EA0B00534DB9 /* Settings.bundle */,
-			);
-			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		DA35581B1A39D3BC00AFA5FD /* NEMWalletTests */ = {
-			isa = PBXGroup;
-			children = (
-				DA35581E1A39D3BC00AFA5FD /* NemIOSClientTests.swift */,
-				DA35581C1A39D3BC00AFA5FD /* Supporting Files */,
-			);
-			path = NEMWalletTests;
-			sourceTree = "<group>";
-		};
-		DA35581C1A39D3BC00AFA5FD /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				DA35581D1A39D3BC00AFA5FD /* Info.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -856,9 +831,8 @@
 			isa = PBXGroup;
 			children = (
 				4F9F67E91D4C31080086F98F /* AppDelegate.swift */,
-				4F9F67ED1D4C31140086F98F /* NavigationController.swift */,
-				4F9F67EF1D4C311C0086F98F /* MoreMenuViewController.swift */,
 				DADDA24C1B21D17800F3F5F5 /* Constants.swift */,
+				4F9F67EF1D4C311C0086F98F /* MoreMenuViewController.swift */,
 				4F9F67F11D4C31300086F98F /* Main.storyboard */,
 				4FDEEC1E1E132D6100B7D93E /* LaunchScreen.storyboard */,
 			);
@@ -883,6 +857,7 @@
 				4FD95DC21D93D8D300FB1924 /* InvoiceModel.swift */,
 				4FC27A031D95297600421F00 /* BlockModel.swift */,
 				4F15DCA61DA294400042997C /* ServerModel.swift */,
+				4F86A0A11F0FB5A200132F8C /* QRModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -899,7 +874,7 @@
 			isa = PBXGroup;
 			children = (
 				4F1159E51D38FE9E00E13EE0 /* Images */,
-				4F1159E61D38FEA900E13EE0 /* Databases */,
+				4F1159E61D38FEA900E13EE0 /* Database */,
 				4F1159E31D38FDDB00E13EE0 /* Property Lists */,
 				4F1159E41D38FE4A00E13EE0 /* Localizations */,
 				DA3558031A39D3BA00AFA5FD /* Supporting Files */,
@@ -929,24 +904,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4F1159D81D38FC5700E13EE0 /* NEMWalletUITests */ = {
+		4F76D04E1F2657AD00D9694D /* NEMWalletTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4F1159E01D38FC5800E13EE0 /* Build configuration list for PBXNativeTarget "NEMWalletUITests" */;
+			buildConfigurationList = 4F76D0561F2657AD00D9694D /* Build configuration list for PBXNativeTarget "NEMWalletTests" */;
 			buildPhases = (
-				4F1159D51D38FC5700E13EE0 /* Sources */,
-				4F1159D61D38FC5700E13EE0 /* Frameworks */,
-				4F1159D71D38FC5700E13EE0 /* Resources */,
-				4F9F67A61D48FD3E0086F98F /* CopyFiles */,
+				4F76D04B1F2657AD00D9694D /* Sources */,
+				4F76D04C1F2657AD00D9694D /* Frameworks */,
+				4F76D04D1F2657AD00D9694D /* Resources */,
+				4F76D05B1F2657E900D9694D /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4F1159DF1D38FC5800E13EE0 /* PBXTargetDependency */,
+				4F76D0551F2657AD00D9694D /* PBXTargetDependency */,
 			);
-			name = NEMWalletUITests;
-			productName = NemIOSClientUITests;
-			productReference = 4F1159D91D38FC5700E13EE0 /* NEMWalletUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
+			name = NEMWalletTests;
+			productName = NEMWalletTests;
+			productReference = 4F76D04F1F2657AD00D9694D /* NEMWalletTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		DA3557FF1A39D3B900AFA5FD /* NEMWallet */ = {
 			isa = PBXNativeTarget;
@@ -967,25 +942,6 @@
 			productReference = DA3558001A39D3B900AFA5FD /* NEMWallet.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DA3558171A39D3BC00AFA5FD /* NEMWalletTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DA3558251A39D3BC00AFA5FD /* Build configuration list for PBXNativeTarget "NEMWalletTests" */;
-			buildPhases = (
-				DA3558141A39D3BC00AFA5FD /* Sources */,
-				DA3558151A39D3BC00AFA5FD /* Frameworks */,
-				DA3558161A39D3BC00AFA5FD /* Resources */,
-				4F9F67A11D48FD0B0086F98F /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DA35581A1A39D3BC00AFA5FD /* PBXTargetDependency */,
-			);
-			name = NEMWalletTests;
-			productName = NemIOSClientTests;
-			productReference = DA3558181A39D3BC00AFA5FD /* NEMWalletTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -993,14 +949,15 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = NEM;
 				TargetAttributes = {
-					4F1159D81D38FC5700E13EE0 = {
-						CreatedOnToolsVersion = 7.3.1;
+					4F76D04E1F2657AD00D9694D = {
+						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = PNXDDDXH4F;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0830;
+						ProvisioningStyle = Automatic;
 						TestTargetID = DA3557FF1A39D3B900AFA5FD;
 					};
 					DA3557FF1A39D3B900AFA5FD = {
@@ -1021,12 +978,6 @@
 								enabled = 0;
 							};
 						};
-					};
-					DA3558171A39D3BC00AFA5FD = {
-						CreatedOnToolsVersion = 6.0.1;
-						DevelopmentTeam = PNXDDDXH4F;
-						LastSwiftMigration = 0800;
-						TestTargetID = DA3557FF1A39D3B900AFA5FD;
 					};
 				};
 			};
@@ -1058,14 +1009,13 @@
 			projectRoot = "";
 			targets = (
 				DA3557FF1A39D3B900AFA5FD /* NEMWallet */,
-				DA3558171A39D3BC00AFA5FD /* NEMWalletTests */,
-				4F1159D81D38FC5700E13EE0 /* NEMWalletUITests */,
+				4F76D04E1F2657AD00D9694D /* NEMWalletTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		4F1159D71D38FC5700E13EE0 /* Resources */ = {
+		4F76D04D1F2657AD00D9694D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1076,20 +1026,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F86A0961F0E85C300132F8C /* AppIcon.xcassets in Resources */,
+				4F86A0A01F0E8AC200132F8C /* Transaction.xcassets in Resources */,
 				4FDEEC1F1E132D6100B7D93E /* LaunchScreen.storyboard in Resources */,
 				4FC80C291EF80A270042EA06 /* TestnetDefaultServers.plist in Resources */,
-				4F9F68981D4C39DF0086F98F /* Images.xcassets in Resources */,
+				4F86A0981F0E869400132F8C /* AddressBook.xcassets in Resources */,
+				4F86A0921F0E852700132F8C /* Logo.xcassets in Resources */,
+				4F86A0941F0E857100132F8C /* Export.xcassets in Resources */,
+				4F86A0901F0E84E400132F8C /* Settings.xcassets in Resources */,
 				4F9F67F21D4C31300086F98F /* Main.storyboard in Resources */,
 				4F15DCAF1DA2B3E10042997C /* DefaultServers.plist in Resources */,
+				4F86A09C1F0E873400132F8C /* AccountAddition.xcassets in Resources */,
 				9809BE271B75008F0028D082 /* Localizable.strings in Resources */,
 				644160CB1EF8EA0B00534DB9 /* Settings.bundle in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DA3558161A39D3BC00AFA5FD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				4F86A09A1F0E86ED00132F8C /* ActionBar.xcassets in Resources */,
+				4F86A09E1F0E8A3000132F8C /* TabBar.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1112,11 +1063,11 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		4F1159D51D38FC5700E13EE0 /* Sources */ = {
+		4F76D04B1F2657AD00D9694D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F1159DC1D38FC5800E13EE0 /* NemIOSClientUITests.swift in Sources */,
+				4F76D0611F265E6500D9694D /* AccountTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,14 +1091,13 @@
 				4F0B5EFD1DAFD38500E182C3 /* DetailedTableViewCell.swift in Sources */,
 				4F3ACE9F1D6217430056F234 /* MultisigSignatureTransactionModel.swift in Sources */,
 				4F3ACE941D61C31C0056F234 /* AccountDataModel.swift in Sources */,
-				4F9F687C1D4C37C80086F98F /* SettingsNotificationIntervalViewController.swift in Sources */,
 				4F3ACE9D1D6214060056F234 /* TransferTransactionModel.swift in Sources */,
 				4F850F171D4C3C930003E192 /* NSData+Base64.m in Sources */,
 				4F9F68101D4C336C0086F98F /* AccountAdditionMenuButton.swift in Sources */,
 				4F9F682C1D4C350E0086F98F /* TransactionOverviewCorrespondentTableViewCell.swift in Sources */,
 				4F3B428C1D59CF100067E3D3 /* AccountAdditionMenuPasswordValidationViewController.swift in Sources */,
 				4F2C17081D67312C00FF1F51 /* TransactionMetaData+Additions.swift in Sources */,
-				4F63E36A1D5E03D100BCFFA4 /* NetworkingEndpoints.swift in Sources */,
+				4F63E36A1D5E03D100BCFFA4 /* NemAPI.swift in Sources */,
 				4F3ACEA31D6218E10056F234 /* MultisigAggregateModificationTransactionModel.swift in Sources */,
 				98BB95D61BCCED5B002151F7 /* ge.c in Sources */,
 				4F0B5F011DAFD40700E182C3 /* String+Additions.swift in Sources */,
@@ -1183,7 +1133,7 @@
 				98BB95DB1BCCED5B002151F7 /* seed.c in Sources */,
 				4FB442CD1D801D5E00A98BAC /* RequestAnnounceModel.swift in Sources */,
 				98BB95D41BCCED5B002151F7 /* add_scalar.c in Sources */,
-				4F9F68081D4C33490086F98F /* AccountListViewController.swift in Sources */,
+				4F9F68081D4C33490086F98F /* WalletOverviewViewController.swift in Sources */,
 				4FB442CB1D75E71A00A98BAC /* TransactionManager.swift in Sources */,
 				98BB95D71BCCED5B002151F7 /* key_exchange.c in Sources */,
 				4F9F68401D4C35E90086F98F /* InvoiceCreationViewController.swift in Sources */,
@@ -1219,7 +1169,8 @@
 				4FA825CE1D9995E10095C97C /* MultisigCosignatoryModificationModel.swift in Sources */,
 				4F15DCA91DA2A9E20042997C /* SettingsOptionTableViewCell.swift in Sources */,
 				4FC27A041D95297700421F00 /* BlockModel.swift in Sources */,
-				4F9F68061D4C33240086F98F /* AuthenticationPasswordValidationViewController.swift in Sources */,
+				4F9F68061D4C33240086F98F /* AuthenticationViewController.swift in Sources */,
+				4F9D544D1F62F21C00A80CBE /* CIImage+Additions.swift in Sources */,
 				4F9F68621D4C36C70086F98F /* SettingsViewController.swift in Sources */,
 				4F9F685E1D4C36A50086F98F /* HarvestingViewController.swift in Sources */,
 				4F0B5EFB1DAFD34C00E182C3 /* SettingsServerTableViewCell.swift in Sources */,
@@ -1236,9 +1187,10 @@
 				4F0B5F031DAFD41000E182C3 /* Double+Additions.swift in Sources */,
 				4F9F682E1D4C35160086F98F /* TransactionSendViewController.swift in Sources */,
 				4F0B5F0E1DAFD50700E182C3 /* MultisigSignatureTransaction+Additions.swift in Sources */,
+				4F86A0A21F0FB5A200132F8C /* QRModel.swift in Sources */,
 				DADDA24D1B21D17800F3F5F5 /* Constants.swift in Sources */,
 				4F15DCA71DA294400042997C /* ServerModel.swift in Sources */,
-				4F9F687E1D4C38280086F98F /* QRCodeScannerView.swift in Sources */,
+				4F9F687E1D4C38280086F98F /* QRScannerView.swift in Sources */,
 				4FB442CF1D80269000A98BAC /* Array<UInt8>+Additions.swift in Sources */,
 				4F850F1D1D4C3D550003E192 /* keccak.c in Sources */,
 				4F9F68041D4C33140086F98F /* AuthenticationPasswordCreationViewController.swift in Sources */,
@@ -1247,26 +1199,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DA3558141A39D3BC00AFA5FD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DA35581F1A39D3BC00AFA5FD /* NemIOSClientTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4F1159DF1D38FC5800E13EE0 /* PBXTargetDependency */ = {
+		4F76D0551F2657AD00D9694D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DA3557FF1A39D3B900AFA5FD /* NEMWallet */;
-			targetProxy = 4F1159DE1D38FC5800E13EE0 /* PBXContainerItemProxy */;
-		};
-		DA35581A1A39D3BC00AFA5FD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DA3557FF1A39D3B900AFA5FD /* NEMWallet */;
-			targetProxy = DA3558191A39D3BC00AFA5FD /* PBXContainerItemProxy */;
+			targetProxy = 4F76D0541F2657AD00D9694D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1298,10 +1237,14 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		4F1159E11D38FC5800E13EE0 /* Debug */ = {
+		4F76D0571F2657AD00D9694D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = PNXDDDXH4F;
@@ -1309,21 +1252,26 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = NemIOSClientUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				INFOPLIST_FILE = NEMWalletTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gospore.NemIOSClientUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = io.nem.NEMWalletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = NemIOSClient;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NEMWallet.app/NEMWallet";
 			};
 			name = Debug;
 		};
-		4F1159E21D38FC5800E13EE0 /* Release */ = {
+		4F76D0581F2657AD00D9694D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = PNXDDDXH4F;
@@ -1331,14 +1279,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = NemIOSClientUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				INFOPLIST_FILE = NEMWalletTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gospore.NemIOSClientUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = io.nem.NEMWalletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = NemIOSClient;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NEMWallet.app/NEMWallet";
 			};
 			name = Release;
 		};
@@ -1367,6 +1314,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Taras Tsarenko (MUG6RP895C)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Taras Tsarenko (MUG6RP895C)";
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1420,6 +1368,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Taras Tsarenko (TWWK2EDBEZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Taras Tsarenko (TWWK2EDBEZ)";
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1447,7 +1396,7 @@
 				ALTERNATE_OWNER = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "NEMWallet/Assets/Supporting Files/NemIOSClient.entitlements";
+				CODE_SIGN_ENTITLEMENTS = NEMWallet/NEMWallet.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = PNXDDDXH4F;
@@ -1477,7 +1426,7 @@
 				ALTERNATE_OWNER = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "NEMWallet/Assets/Supporting Files/NemIOSClient.entitlements";
+				CODE_SIGN_ENTITLEMENTS = NEMWallet/NEMWallet.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = PNXDDDXH4F;
@@ -1501,62 +1450,14 @@
 			};
 			name = Release;
 		};
-		DA3558261A39D3BC00AFA5FD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = PNXDDDXH4F;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = NemIOSClientTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "artygeek.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NEMWallet.app/NEMWallet";
-			};
-			name = Debug;
-		};
-		DA3558271A39D3BC00AFA5FD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = PNXDDDXH4F;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = NemIOSClientTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "artygeek.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NEMWallet.app/NEMWallet";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4F1159E01D38FC5800E13EE0 /* Build configuration list for PBXNativeTarget "NEMWalletUITests" */ = {
+		4F76D0561F2657AD00D9694D /* Build configuration list for PBXNativeTarget "NEMWalletTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4F1159E11D38FC5800E13EE0 /* Debug */,
-				4F1159E21D38FC5800E13EE0 /* Release */,
+				4F76D0571F2657AD00D9694D /* Debug */,
+				4F76D0581F2657AD00D9694D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1575,15 +1476,6 @@
 			buildConfigurations = (
 				DA3558231A39D3BC00AFA5FD /* Debug */,
 				DA3558241A39D3BC00AFA5FD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DA3558251A39D3BC00AFA5FD /* Build configuration list for PBXNativeTarget "NEMWalletTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DA3558261A39D3BC00AFA5FD /* Debug */,
-				DA3558271A39D3BC00AFA5FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

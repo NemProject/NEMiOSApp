@@ -19,8 +19,6 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var securityTouchIDValueLabel: UILabel!
     @IBOutlet weak var serverHeadingLabel: UILabel!
     @IBOutlet weak var serverValueLabel: UILabel!
-    @IBOutlet weak var notificationUpdateIntervalHeadingLabel: UILabel!
-    @IBOutlet weak var notificationUpdateIntervalValueLabel: UILabel!
     
     // MARK: - View Controller Lifecycle
     
@@ -59,8 +57,6 @@ class SettingsViewController: UITableViewController {
             return "SECURITY".localized()
         case 2:
             return "SERVER_SETTINGS".localized()
-        case 3:
-            return "NOTIFICATION".localized()
         default:
             return String()
         }
@@ -77,7 +73,7 @@ class SettingsViewController: UITableViewController {
                 let versionNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
                 let buildNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
 
-                showAlert(withMessage: "\(network == testNetwork ? "Testnet " : "")\("VERSION".localized()) \(versionNumber) \("BUILD".localized()) \(buildNumber)")
+                showAlert(withMessage: "\(Constants.activeNetwork == Constants.testNetwork ? "Testnet " : "")\("VERSION".localized()) \(versionNumber) \("BUILD".localized()) \(buildNumber)")
                 tableView.deselectRow(at: indexPath, animated: true)
                 
             default:
@@ -89,7 +85,7 @@ class SettingsViewController: UITableViewController {
             switch indexPath.row {
             case 1:
                 
-                var authenticationTouchIDStatus = SettingsManager.sharedInstance.authenticationTouchIDStatus()
+                var authenticationTouchIDStatus = SettingsManager.sharedInstance.touchIDAuthenticationIsActivated()
                 authenticationTouchIDStatus = !authenticationTouchIDStatus
                 
                 SettingsManager.sharedInstance.setAuthenticationTouchIDStatus(authenticationTouchIDStatus: authenticationTouchIDStatus)
@@ -125,7 +121,6 @@ class SettingsViewController: UITableViewController {
         securityChangePasswordHeadingLabel.text = "PASSWORD_CHANGE_CONFIG".localized()
         securityTouchIDHeadingLabel.text = "TOUCH_ID".localized()
         serverHeadingLabel.text = "SERVER".localized()
-        notificationUpdateIntervalHeadingLabel.text = "UPDATE_INTERVAL".localized()
     }
     
     /**
@@ -154,13 +149,12 @@ class SettingsViewController: UITableViewController {
         
         handleAuthenticationTouchIDSetting()
         handleActiveServerSetting()
-        handleNotificationIntervalSetting()
     }
     
     /// Displays the current touch id setting status.
     fileprivate func handleAuthenticationTouchIDSetting() {
 
-        let authenticationTouchIDStatus = SettingsManager.sharedInstance.authenticationTouchIDStatus()
+        let authenticationTouchIDStatus = SettingsManager.sharedInstance.touchIDAuthenticationIsActivated()
         
         securityTouchIDValueLabel.text = authenticationTouchIDStatus ? "ON".localized() : "OFF".localized()
     }
@@ -171,34 +165,5 @@ class SettingsViewController: UITableViewController {
         let activeServer = SettingsManager.sharedInstance.activeServer()
         
         serverValueLabel.text = activeServer.address 
-    }
-    
-    /// Displays the currently set notification update interval.
-    fileprivate func handleNotificationIntervalSetting() {
-        
-        let notificationUpdateInterval = SettingsManager.sharedInstance.notificationUpdateInterval()
-        
-        switch notificationUpdateInterval {
-        case 0:
-            notificationUpdateIntervalValueLabel.text = "NEVER".localized()
-        case 90:
-            notificationUpdateIntervalValueLabel.text = "30 " + "MINUTES".localized()
-        case 180:
-            notificationUpdateIntervalValueLabel.text = "60 " + "MINUTES".localized()
-        case 360:
-            notificationUpdateIntervalValueLabel.text = "1 " + "HOURS".localized()
-        case 720:
-            notificationUpdateIntervalValueLabel.text = "2 " + "HOURS".localized()
-        case 1440:
-            notificationUpdateIntervalValueLabel.text = "4 " + "HOURS".localized()
-        case 2880:
-            notificationUpdateIntervalValueLabel.text = "8 " + "HOURS".localized()
-        case 4320:
-            notificationUpdateIntervalValueLabel.text = "12 " + "HOURS".localized()
-        case 8640:
-            notificationUpdateIntervalValueLabel.text = "24 " + "HOURS".localized()
-        default:
-            break
-        }
     }
 }

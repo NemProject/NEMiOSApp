@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //
 //  This file is covered by the LICENSE file in the root of this project.
-//  Copyright (c) 2016 NEM
+//  Copyright (c) 2017 NEM
 //
 
 import UIKit
@@ -19,39 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        NetworkActivityIndicatorManager.shared.isEnabled = true
+        configureDependencies()
         
-        if SettingsManager.sharedInstance.setupStatus() == false {
+        if SettingsManager.sharedInstance.setupIsCompleted() {
             
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                
-            let rootViewController = mainStoryboard.instantiateViewController(withIdentifier: "AuthenticationPasswordCreationViewController")
-            if (appDelegate.window != nil) {
-                appDelegate.window!.rootViewController = rootViewController
-            }
+            TimeManager.sharedInstance.synchronizeTime()            
+            NotificationManager.sharedInstance.registerForNotifications()
+            presentAuthenticationViewController(onLaunch: true)
             
         } else {
             
-            TimeManager.sharedInstance.synchronizeTime()
-            
-            if SettingsManager.sharedInstance.notificationUpdateInterval() == 0 {
-                UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalNever)
-            } else {
-                UIApplication.shared.setMinimumBackgroundFetchInterval(TimeInterval(SettingsManager.sharedInstance.notificationUpdateInterval()))
-            }
-            
-            NotificationManager.sharedInstance.registerForNotifications(application)
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            
-            let authenticationPasswordValidationViewController = mainStoryboard.instantiateViewController(withIdentifier: "AuthenticationPasswordValidationViewController") as! AuthenticationPasswordValidationViewController
-            
-            if appDelegate.window != nil {
-                appDelegate.window!.rootViewController = authenticationPasswordValidationViewController
-                appDelegate.window!.makeKeyAndVisible()
-            }
+            presentSetupViewController()
         }
         
         return true
@@ -60,47 +38,87 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         
         TimeManager.sharedInstance.synchronizeTime()
+        presentAuthenticationViewController()
+        NotificationManager.sharedInstance.clearApplicationIconBadge()
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        dismissModalViewsIfNecessary()
+    }
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        NotificationManager.sharedInstance.notifyAboutNewTransactions(withCompletionHandler: completionHandler)
+    }
+    
+    // MARK: - Application Helper Methods
+    
+    /// Configures all necessary application dependencies.
+    private func configureDependencies() {
+        NetworkActivityIndicatorManager.shared.isEnabled = true
+    }
+    
+    /**
+        Presents the authentication view controller. The user then has to authenticate before being
+        able to continue using the application. 
+        The authentication view controller behaves differently depending on whether it is presented 
+        on launch of the application or on entering foreground. On default it will be presented for 
+        the enter foreground mode - customize the 'onLaunch' parameter accordingly.
+     
+        - Parameter onLaunch: Bool, telling the method if the authentication view controller is being presented on application launch or not.
+     */
+    private func presentAuthenticationViewController(onLaunch: Bool = false) {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
         
-        if SettingsManager.sharedInstance.setupStatus() == true {
-            
-            let authenticationPasswordValidationViewController = mainStoryboard.instantiateViewController(withIdentifier: "AuthenticationPasswordValidationViewController") as! AuthenticationPasswordValidationViewController
-            
-            if appDelegate.window != nil {
-                if let rootViewController = UIApplication.topViewController() {
-                    if rootViewController is AuthenticationPasswordValidationViewController {
+        let authenticationViewController = mainStoryboard.instantiateViewController(withIdentifier: "AuthenticationViewController") as! AuthenticationViewController
+        
+        if SettingsManager.sharedInstance.setupIsCompleted() && appDelegate.window != nil {
+            if onLaunch {
+                
+                appDelegate.window!.rootViewController = authenticationViewController
+                appDelegate.window!.makeKeyAndVisible()
+                
+            } else {
+                
+                if let topViewController = UIApplication.topViewController() {
+                    if !(topViewController is AuthenticationViewController) {
                         
-                        appDelegate.window!.rootViewController = authenticationPasswordValidationViewController
-                        
-                    } else {
-                        
-                        rootViewController.present(authenticationPasswordValidationViewController, animated: false, completion: nil)
+                        topViewController.present(authenticationViewController, animated: false, completion: nil)
                     }
                 }
             }
         }
     }
     
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    /**
+        Presents the setup view controller, which will be shown on first launch of the application 
+        and lets the user setup the application, choose an application password, etc.
+     */
+    private func presentSetupViewController() {
         
-        if let rootViewController = UIApplication.topViewController() {
-            if rootViewController is AuthenticationPasswordValidationViewController {
-                rootViewController.dismiss(animated: false, completion: nil)
-            } else if rootViewController is UIAlertController {
-                rootViewController.dismiss(animated: false, completion: nil)
-            }
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let authenticationPasswordCreationViewController = mainStoryboard.instantiateViewController(withIdentifier: "AuthenticationPasswordCreationViewController") as! AuthenticationPasswordCreationViewController
+        
+        if appDelegate.window != nil {
+            appDelegate.window!.rootViewController = authenticationPasswordCreationViewController
         }
     }
     
-    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+    /**
+        Dismisses all modals views where it is necessary. 
+        For example, alert controllers need to get dismissed when entering the background to present 
+        the authentication view controller correctly when entering the foreground.
+     */
+    private func dismissModalViewsIfNecessary() {
         
-        NotificationManager.sharedInstance.didReceiveLocalNotificaton(notification)
-    }
-    
-    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        
-        NotificationManager.sharedInstance.performFetch(completionHandler)
+        if let topViewController = UIApplication.topViewController() {
+            if topViewController is UIAlertController {
+                
+                topViewController.dismiss(animated: false, completion: nil)
+            }
+        }
     }
 }

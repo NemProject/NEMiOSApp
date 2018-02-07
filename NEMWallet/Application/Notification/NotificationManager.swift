@@ -2,7 +2,7 @@
 //  NotificationManager.swift
 //
 //  This file is covered by the LICENSE file in the root of this project.
-//  Copyright (c) 2016 NEM
+//  Copyright (c) 2017 NEM
 //
 
 import UIKit
@@ -13,51 +13,107 @@ import SwiftyJSON
     in relationship with notifications. Use this managers available methods
     instead of writing your own logic.
  */
-open class NotificationManager {
+final class NotificationManager {
     
     // MARK: - Manager Properties
     
     /// The singleton for the notification manager.
-    open static let sharedInstance = NotificationManager()
+    static let sharedInstance = NotificationManager()
     
-    /// The completion handler that need to get called to finish the background fetch.
-    fileprivate var completionHandler: ((UIBackgroundFetchResult) -> Void)? = nil
+    /// The server with which new transactions get fetched.
+    private var respondingServer: Server?
     
-    /// The server with which the networking requests will get performed.
-    fileprivate var server: Server?
+    /// The dispatch group for the server discovery.
+    private let discoverRespondingServerDispatchGroup = DispatchGroup()
     
-    fileprivate let heartbeatDispatchGroup = DispatchGroup()
-    fileprivate let transactionsDispatchGroup = DispatchGroup()
+    /// The dispatch group for fetching new transactions.
+    private let fetchNewTransactionsDispatchGroup = DispatchGroup()
+    
+    // MARK: - Manager Lifecycle
+    
+    private init() {} // Prevents others from creating own instances of this manager and not using the singleton.
     
     // MARK: - Public Manager Methods
     
-    open func registerForNotifications(_ application: UIApplication) {
+    /**
+        Registers the application to receive notifications.
+        This method has to be called on application launch to enable notifications.
+     */
+    public func registerForNotifications() {
         
-        UIApplication.shared.applicationIconBadgeNumber = 0
-        
+        let application = UIApplication.shared
         let userNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        application.registerUserNotificationSettings(userNotificationSettings)
-    }
-    
-    open func didReceiveLocalNotificaton(_ notification: UILocalNotification) {
         
-        UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber - 1
+        application.registerUserNotificationSettings(userNotificationSettings)
+        application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        clearApplicationIconBadge()
     }
     
-    open func scheduleLocalNotificationAfter(_ title: String, body: String, interval: Double, userInfo: [AnyHashable: Any]?) {
+    /**
+        Fetches new transactions for every acccount on the device and notifies the user about those new transactions
+        via a local notification. This polling happens on background fetch because remote notifications aren't an
+        option because of decentralization.
+     
+        - Parameter backgroundFetchCompletionHandler: The completion handler of the background fetch, which needs to get called when the process finishes.
+     */
+    public func notifyAboutNewTransactions(withCompletionHandler backgroundFetchCompletionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        fetchNewTransactionsDispatchGroup.enter()
+        discoverRespondingServer()
+        
+        discoverRespondingServerDispatchGroup.notify(queue: .main) {
+            
+            if self.respondingServer == nil {
+                
+                self.displayNotification(withTitle: "", andBody: "NO_PRIMARY_SERVER".localized())
+                return backgroundFetchCompletionHandler(.failed)
+                
+            } else {
+                self.fetchNewTransactions()
+            }
+        }
+        
+        fetchNewTransactionsDispatchGroup.notify(queue: .main) {
+            return backgroundFetchCompletionHandler(.newData)
+        }
+    }
+    
+    /// Clears the application icon badge.
+    public func clearApplicationIconBadge() {
+        
+        let application = UIApplication.shared
+        application.applicationIconBadgeNumber = 0
+    }
+    
+    // MARK: - Private Manager Methods
+    
+    /**
+        Displays a local notification to the user with a given title and body.
+     
+        - Parameter title: The title of the notification.
+        - Parameter body: The body of the notification.
+     */
+    private func displayNotification(withTitle title: String, andBody body: String) {
+        
+        let application = UIApplication.shared
         
         let localNotification = UILocalNotification()
-        localNotification.fireDate = Date(timeIntervalSinceNow: interval)
+        localNotification.fireDate = Date(timeIntervalSinceNow: 1)
         localNotification.timeZone = TimeZone.current
+        localNotification.applicationIconBadgeNumber = application.applicationIconBadgeNumber + 1
+        localNotification.soundName = UILocalNotificationDefaultSoundName
         localNotification.alertTitle = title
         localNotification.alertBody = body
-        localNotification.userInfo = userInfo
-        UIApplication.shared.scheduleLocalNotification(localNotification)
-    }
-
-    open func performFetch(_ completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        self.completionHandler = completionHandler
+        application.scheduleLocalNotification(localNotification)
+    }
+    
+    /**
+        Goes through all locally saved servers, requests a heartbeat response from them and selects a
+        responding server to look for new transactions later on. Stores the discovered responding server
+        in the 'respondingServer' property.
+     */
+    private func discoverRespondingServer() {
         
         let servers = SettingsManager.sharedInstance.servers()
         
@@ -67,32 +123,67 @@ open class NotificationManager {
                 switch result {
                 case .success:
                     
-                    if self.server == nil {
-                        self.server = server
+                    if self.respondingServer == nil {
+                        self.respondingServer = server
                     }
                     
                 default:
                     break
                 }
                 
-                self.heartbeatDispatchGroup.leave()
+                self.discoverRespondingServerDispatchGroup.leave()
             })
         }
-        
-        heartbeatDispatchGroup.notify(queue: .main) {
-            
-            if self.server == nil {
-                
-                self.scheduleLocalNotificationAfter("", body: "NO_PRIMARY_SERVER".localized(), interval: 1, userInfo: nil)
-                self.completionHandler?(.failed)
+    }
     
-            } else {
-                self.fetchNewTransactions()
+    /**
+        Sends a heartbeat request to the selected server to see if the server responds and is a valid NIS.
+     
+        - Parameter server: The server that should get checked.
+     
+        - Returns: The result of the operation.
+     */
+    private func getHeartbeatResponse(fromServer server: Server, completion: @escaping (_ result: Result) -> Void) {
+        
+        discoverRespondingServerDispatchGroup.enter()
+        
+        NEMProvider.request(NEM.heartbeat(server: server)) { (result) in
+            
+            switch result {
+            case let .success(response):
+                
+                do {
+                    let _ = try response.filterSuccessfulStatusCodes()
+                    
+                    DispatchQueue.main.async {
+                        return completion(.success)
+                    }
+                    
+                } catch {
+                    
+                    DispatchQueue.main.async {
+                        
+                        print("Failure: \(response.statusCode)")
+                        return completion(.failure)
+                    }
+                }
+                
+            case let .failure(error):
+                
+                DispatchQueue.main.async {
+                    
+                    print(error)
+                    return completion(.failure)
+                }
             }
         }
     }
-
-    open func fetchNewTransactions() {
+    
+    /**
+        Fetches new transactions for all accounts on the device, counts them and displays a local 
+        notification accordingly.
+     */
+    private func fetchNewTransactions() {
         
         let accounts = AccountManager.sharedInstance.accounts()
         
@@ -119,16 +210,22 @@ open class NotificationManager {
                 }
                 
                 if newTransactionsCount > 0 {
-                    self.scheduleLocalNotificationAfter("", body: String(format: "NOTIFICATION_MESSAGE".localized(), newTransactionsCount, account.title), interval: 1, userInfo: nil)
                     
-                    let firstTransaction = transactions.first as! TransferTransaction
+                    self.displayNotification(withTitle: "", andBody: String(format: "NOTIFICATION_MESSAGE".localized(), newTransactionsCount, account.title))
                     
-                    if firstTransaction.metaData != nil && firstTransaction.metaData?.hash != nil {
-                        AccountManager.sharedInstance.updateLatestTransactionHash(forAccount: account, withLatestTransactionHash: firstTransaction.metaData!.hash!)
+                    if let latestTransaction = transactions.first as? TransferTransaction {
+                        if latestTransaction.metaData != nil && latestTransaction.metaData?.hash != nil {
+                            AccountManager.sharedInstance.updateLatestTransactionHash(forAccount: account, withLatestTransactionHash: latestTransaction.metaData!.hash!)
+                        }
+                        
+                    } else if let latestTransaction = transactions.first as? MultisigAggregateModificationTransaction {
+                        if latestTransaction.metaData != nil && latestTransaction.metaData?.hash != nil {
+                            AccountManager.sharedInstance.updateLatestTransactionHash(forAccount: account, withLatestTransactionHash: latestTransaction.metaData!.hash!)
+                        }
                     }
                 }
                 
-                self.transactionsDispatchGroup.leave()
+                self.fetchNewTransactionsDispatchGroup.leave()
             })
             
             fetchUnconfirmedTransactions(forAccount: account, completion: { [unowned self] (result, unconfirmedTransactions) in
@@ -188,75 +285,26 @@ open class NotificationManager {
                 }
                 
                 if unsignedTransactionsCount > 0 {
-                    self.scheduleLocalNotificationAfter("", body: "\(account.title): \("UNCONFIRMED_TRANSACTIONS_DETECTED".localized())", interval: 1, userInfo: nil)
+                    self.displayNotification(withTitle: "", andBody: "\(account.title): \("UNCONFIRMED_TRANSACTIONS_DETECTED".localized())")
                 }
                 
-                self.transactionsDispatchGroup.leave()
+                self.fetchNewTransactionsDispatchGroup.leave()
             })
         }
         
-        transactionsDispatchGroup.notify(queue: .main) {
-            
-            self.completionHandler?(.newData)
-        }
-    }
-    
-    // MARK: - Private Manager Methods
-    
-    /**
-        Sends a heartbeat request to the selected server to see if the server is a valid NIS.
-     
-        - Parameter server: The server that should get checked.
-     
-        - Returns: The result of the operation.
-     */
-    fileprivate func getHeartbeatResponse(fromServer server: Server, completion: @escaping (_ result: Result) -> Void) {
-        
-        heartbeatDispatchGroup.enter()
-        
-        nisProvider.request(NIS.heartbeat(server: server)) { (result) in
-            
-            switch result {
-            case let .success(response):
-                
-                do {
-                    let _ = try response.filterSuccessfulStatusCodes()
-                    
-                    DispatchQueue.main.async {
-                        
-                        return completion(.success)
-                    }
-                    
-                } catch {
-                    
-                    DispatchQueue.main.async {
-                        
-                        print("Failure: \(response.statusCode)")
-                        return completion(.failure)
-                    }
-                }
-                
-            case let .failure(error):
-                
-                DispatchQueue.main.async {
-                    
-                    print(error)
-                    return completion(.failure)
-                }
-            }
-        }
+        fetchNewTransactionsDispatchGroup.leave()
     }
     
     /**
-        Fetches the last 25 transactions for the current account from the active NIS.
+        Fetches the last 25 transactions for the account from the specified server.
      
-        - Parameter account: The current account for which the transactions should get fetched.
+        - Parameter account: The account for which transactions should get fetched.
      */
-    fileprivate func fetchAllTransactions(forAccount account: Account, completion: @escaping (_ result: Result, _ transactions: [Transaction]) -> Void) {
+    private func fetchAllTransactions(forAccount account: Account, completion: @escaping (_ result: Result, _ transactions: [Transaction]) -> Void) {
         
-        transactionsDispatchGroup.enter()
+        fetchNewTransactionsDispatchGroup.enter()
         
-        nisProvider.request(NIS.allTransactions(accountAddress: account.address, server: self.server)) { (result) in
+        NEMProvider.request(NEM.confirmedTransactions(accountAddress: account.address, server: self.respondingServer)) { (result) in
             
             switch result {
             case let .success(response):
@@ -327,15 +375,15 @@ open class NotificationManager {
     }
     
     /**
-        Fetches all unconfirmed transactions for the current account from the active NIS.
+        Fetches all unconfirmed transactions for the account from the specified server.
      
-        - Parameter account: The current account for which the unconfirmed transactions should get fetched.
+        - Parameter account: The account for which unconfirmed transactions should get fetched.
      */
-    fileprivate func fetchUnconfirmedTransactions(forAccount account: Account, completion: @escaping (_ result: Result, _ unconfirmedTransactions: [Transaction]) -> Void) {
+    private func fetchUnconfirmedTransactions(forAccount account: Account, completion: @escaping (_ result: Result, _ unconfirmedTransactions: [Transaction]) -> Void) {
         
-        transactionsDispatchGroup.enter()
+        fetchNewTransactionsDispatchGroup.enter()
         
-        nisProvider.request(NIS.unconfirmedTransactions(accountAddress: account.address, server: self.server)) { (result) in
+        NEMProvider.request(NEM.unconfirmedTransactions(accountAddress: account.address, server: self.respondingServer)) { (result) in
             
             switch result {
             case let .success(response):

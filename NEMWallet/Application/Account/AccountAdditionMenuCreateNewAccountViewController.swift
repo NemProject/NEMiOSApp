@@ -66,7 +66,7 @@ class AccountAdditionMenuCreateNewAccountViewController: UIViewController {
         do {
             let _ = try validate(enteredInformation: title)
             
-            AccountManager.sharedInstance.create(account: title, completion: { [unowned self] (result) in
+            AccountManager.sharedInstance.create(account: title, completion: { [unowned self] (result, _) in
                                 
                 switch result {
                 case .success:
@@ -74,7 +74,7 @@ class AccountAdditionMenuCreateNewAccountViewController: UIViewController {
                     let alert = UIAlertController(title: "Warning", message: "The account was successfully created. Don't forget to backup your private key! Select your account on the dashboard, go to 'more' -> 'export account'", preferredStyle: UIAlertControllerStyle.alert)
                     
                     alert.addAction(UIAlertAction(title: "OK".localized(), style: UIAlertActionStyle.default, handler: { [unowned self] (action) -> Void in
-                        self.performSegue(withIdentifier: "unwindToAccountListViewController", sender: nil)
+                        self.performSegue(withIdentifier: "unwindToWalletOverviewViewController", sender: nil)
                     }))
                     
                     self.present(alert, animated: true, completion: nil)

@@ -209,7 +209,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
     /// Starts refreshing the transaction overview in the defined interval.
     fileprivate func startRefreshing() {
         
-        refreshTimer = Timer.scheduledTimer(timeInterval: TimeInterval(updateInterval), target: self, selector: #selector(TransactionMessagesViewController.refreshCorrespondentTransactions), userInfo: nil, repeats: true)
+        refreshTimer = Timer.scheduledTimer(timeInterval: TimeInterval(Constants.updateInterval), target: self, selector: #selector(TransactionMessagesViewController.refreshCorrespondentTransactions), userInfo: nil, repeats: true)
     }
     
     /// Stops refreshing the transaction overview.
@@ -275,7 +275,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
      */
     fileprivate func fetchAccountData(forAccount account: Account, shouldUpdateViewControllerAppearance: Bool = false) {
         
-        nisProvider.request(NIS.accountData(accountAddress: account.address)) { [weak self] (result) in
+        NEMProvider.request(NEM.accountData(accountAddress: account.address)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -329,7 +329,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
      */
     fileprivate func fetchPublicKey(forCorrespondentWithAddress accountAddress: String) {
         
-        nisProvider.request(NIS.accountData(accountAddress: accountAddress)) { [weak self] (result) in
+        NEMProvider.request(NEM.accountData(accountAddress: accountAddress)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -377,7 +377,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
         
         correspondentTransactionsDispatchGroup.enter()
         
-        nisProvider.request(NIS.allTransactions(accountAddress: account.address, server: nil)) { [weak self] (result) in
+        NEMProvider.request(NEM.confirmedTransactions(accountAddress: account.address, server: nil)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -453,7 +453,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
         
         correspondentTransactionsDispatchGroup.enter()
         
-        nisProvider.request(NIS.unconfirmedTransactions(accountAddress: account.address, server: nil)) { [weak self] (result) in
+        NEMProvider.request(NEM.unconfirmedTransactions(accountAddress: account.address, server: nil)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -528,7 +528,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
         
         let requestAnnounce = TransactionManager.sharedInstance.signTransaction(transaction, account: account!)
         
-        nisProvider.request(NIS.announceTransaction(requestAnnounce: requestAnnounce)) { [weak self] (result) in
+        NEMProvider.request(NEM.announceTransaction(requestAnnounce: requestAnnounce)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -883,13 +883,13 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
         transactionSendButton.isEnabled = false
         
         let transactionVersion = 1
-        let transactionTimeStamp = Int(TimeManager.sharedInstance.timeStamp)
+        let transactionTimeStamp = Int(TimeManager.sharedInstance.currentNetworkTime)
         let transactionAmount = Double(transactionAmountTextField.text!) ?? 0.0
         var transactionFee = 0.0
         let transactionRecipient = correspondent!.accountAddress
         let transactionMessageText = transactionMessageTextField.text!.hexadecimalStringUsingEncoding(String.Encoding.utf8) ?? String()
         var transactionMessageByteArray: [UInt8] = transactionMessageText.asByteArray()
-        let transactionDeadline = Int(TimeManager.sharedInstance.timeStamp + waitTime)
+        let transactionDeadline = Int(TimeManager.sharedInstance.currentNetworkTime + Constants.transactionDeadline)
         let transactionSigner = activeAccountData!.publicKey
         
         if transactionAmount < 0.000001 && transactionAmount != 0 {
@@ -928,7 +928,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
         
         transactionFee = TransactionManager.sharedInstance.calculateFee(forTransactionWithAmount: transactionAmount)
         transactionFee += TransactionManager.sharedInstance.calculateFee(forTransactionWithMessage: transactionMessageByteArray, isEncrypted: willEncrypt)
-        
+                
         let transactionMessage = Message(type: willEncrypt ? MessageType.encrypted : MessageType.unencrypted, payload: transactionMessageByteArray, message: transactionMessageTextField.text!)
         let transaction = TransferTransaction(version: transactionVersion, timeStamp: transactionTimeStamp, amount: transactionAmount * 1000000, fee: Int(transactionFee * 1000000), recipient: transactionRecipient!, message: transactionMessage, deadline: transactionDeadline, signer: transactionSigner!)
         
@@ -942,7 +942,7 @@ class TransactionMessagesViewController: UIViewController, UIAlertViewDelegate {
                 // Check if the transaction is a multisig transaction
                 if self!.activeAccountData!.publicKey != self!.account!.publicKey {
                     
-                    let multisigTransaction = MultisigTransaction(version: transactionVersion, timeStamp: transactionTimeStamp, fee: Int(6 * 1000000), deadline: transactionDeadline, signer: self!.account!.publicKey, innerTransaction: transaction!)
+                    let multisigTransaction = MultisigTransaction(version: transactionVersion, timeStamp: transactionTimeStamp, fee: Int(0.15 * 1000000), deadline: transactionDeadline, signer: self!.account!.publicKey, innerTransaction: transaction!)
                     
                     self?.announceTransaction(multisigTransaction!)
                     return
@@ -1017,7 +1017,7 @@ extension TransactionMessagesViewController: UITableViewDataSource, UITableViewD
             let detailBlockHeight = NSMutableAttributedString(string: "\("BLOCK".localized()): ", attributes: nil)
             detailBlockHeight.append(NSMutableAttributedString(string: "\(transaction!.metaData!.height!)", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 10)]))
             let detailFee = NSMutableAttributedString(string: "\("FEE".localized()): ", attributes: nil)
-            detailFee.append(NSMutableAttributedString(string: "\((transaction!.fee / 1000000))", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 10)]))
+            detailFee.append(NSMutableAttributedString(string: "\(Double(transaction!.fee) / Double(1000000))", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 10)]))
             
             cell.setDetails(detailBlockHeight, centerInformation: detailFee, bottomInformation: nil)
             
@@ -1056,14 +1056,14 @@ extension TransactionMessagesViewController: UITableViewDataSource, UITableViewD
                     detailMinCosignatories.append(NSMutableAttributedString(string: "\(minCosignatories!)", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 10)]))
                     detailMinCosignatories.append(NSMutableAttributedString(string: " \("SIGNERS".localized())", attributes: nil))
                     let detailFee = NSMutableAttributedString(string: "\("FEE".localized()): ", attributes: nil)
-                    detailFee.append(NSMutableAttributedString(string: "\((transaction!.fee / 1000000))", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 10)]))
+                    detailFee.append(NSMutableAttributedString(string: "\(Double(transaction!.fee) / Double(1000000))", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 10)]))
                     
                     cell.setDetails(detailCosignatoriesSigned, centerInformation: detailMinCosignatories, bottomInformation: detailFee)
                     
                 } else {
                     
                     let detailFee = NSMutableAttributedString(string: "\("FEE".localized()): ", attributes: nil)
-                    detailFee.append(NSMutableAttributedString(string: "\((transaction!.fee / 1000000))", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 10)]))
+                    detailFee.append(NSMutableAttributedString(string: "\(Double(transaction!.fee) / Double(1000000))", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 10)]))
                     
                     cell.setDetails(nil, centerInformation: detailFee, bottomInformation: nil)
                 }
@@ -1071,7 +1071,7 @@ extension TransactionMessagesViewController: UITableViewDataSource, UITableViewD
             } else {
                 
                 let detailFee = NSMutableAttributedString(string: "\("FEE".localized()): ", attributes: nil)
-                detailFee.append(NSMutableAttributedString(string: "\((transaction!.fee / 1000000))", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 10)]))
+                detailFee.append(NSMutableAttributedString(string: "\(Double(transaction!.fee) / Double(1000000))", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 10)]))
                 
                 cell.setDetails(nil, centerInformation: detailFee, bottomInformation: nil)
             }

@@ -102,7 +102,7 @@ class HarvestingViewController: UIViewController {
         
         harvestingDispatchGroup.enter()
         
-        nisProvider.request(NIS.harvestInfoData(accountAddress: account.address)) { [weak self] (result) in
+        NEMProvider.request(NEM.harvestInfoData(accountAddress: account.address)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
@@ -152,7 +152,7 @@ class HarvestingViewController: UIViewController {
         
         harvestingDispatchGroup.enter()
         
-        nisProvider.request(NIS.accountData(accountAddress: account.address)) { [weak self] (result) in
+        NEMProvider.request(NEM.accountData(accountAddress: account.address)) { [weak self] (result) in
             
             switch result {
             case let .success(response):
