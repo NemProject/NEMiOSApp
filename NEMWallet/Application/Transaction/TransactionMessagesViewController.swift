@@ -159,8 +159,7 @@ final class TransactionMessagesViewController: UIViewController, UIAlertViewDele
     
     /// Creates and adds the compose bar button item to the view controller.
     fileprivate func createBarButtonItem() {
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Copy", style: UIBarButtonItemStyle.plain, target: self, action: #selector(copyCorrespondentAddress(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named:"Copy"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(copyCorrespondentAddress(_:)))
     }
     
     /**
@@ -791,6 +790,7 @@ final class TransactionMessagesViewController: UIViewController, UIAlertViewDele
         
         let pasteBoard = UIPasteboard.general
         pasteBoard.string = correspondent!.accountAddress
+        showAlert(withMessage: "COPY_ADDRESS".localized())
     }
     
     /**
