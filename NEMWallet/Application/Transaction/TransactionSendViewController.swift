@@ -309,7 +309,9 @@ final class TransactionSendViewController: UIViewController, UIScrollViewDelegat
                     
                     DispatchQueue.main.async {
                         
-                        self?.showAlert(withMessage: "TRANSACTION_ANOUNCE_SUCCESS".localized())
+                        self?.showAlert(withMessage: "TRANSACTION_ANOUNCE_SUCCESS".localized()) {
+                            self?.dismiss(animated: true, completion: nil)
+                        }
                         
                         self?.transactionAmountTextField.text = ""
                         self?.transactionMessageTextField.text = ""

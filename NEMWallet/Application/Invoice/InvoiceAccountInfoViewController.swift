@@ -80,7 +80,14 @@ final class InvoiceAccountInfoViewController: UIViewController {
         
         let jsonData = try! JSONSerialization.data(withJSONObject: jsonDictionary, options: JSONSerialization.WritingOptions.prettyPrinted)
         
-        accountQRCodeImageView.image = String(data: jsonData, encoding: String.Encoding.utf8)!.createQRCodeImage()
+        if let image = String(data: jsonData, encoding: String.Encoding.utf8)!.createQRCodeImage() {
+            accountQRCodeImageView.image = image
+        } else {
+            saveAccountQRCodeButton.isEnabled = false
+            shareAccountQRCodeButton.isEnabled = false
+            saveAccountQRCodeButton.backgroundColor = .lightGray
+            shareAccountQRCodeButton.backgroundColor = .lightGray
+        }
     }
     
     // MARK: - View Controller Outlet Actions
