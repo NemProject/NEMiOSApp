@@ -1,0 +1,270 @@
+// MARK: - Languages
+
+"LANGUAGE_ENGLISH" = "English";
+"LANGUAGE_INDONESIAN" = "Indonesian";
+"LANGUAGE_JAPANESE" = "日本語";
+"LANGUAGE_LITHUANIAN" = "Lietuvių";
+"LANGUAGE_CHINESE_SIMPLIFIED" = "Chinese (Simplified)";
+"LANGUAGE_DUTCH" = "Nederlands";
+"LANGUAGE_PORTUGUESE" = "Português";
+"LANGUAGE_CROATIAN" = "Magyar";
+"LANGUAGE_FRENCH" = "Français";
+"LANGUAGE_POLISH" = "Polski";
+"LANGUAGE_FINNISH" = "Suomi";
+"LANGUAGE_SPANISH" = "Español";
+"LANGUAGE_GERMAN" = "Deutsch";
+"LANGUAGE_KOREAN" = "Korean";
+"LANGUAGE_ITALIAN" = "Italian";
+"LANGUAGE_RUSSIAN" = "Russian";
+
+// MARK: - A
+
+"ACCOUNT_PRIMATY" = "Первичная учетная запись";
+"ADD_ACCOUNT" = "Добавить аккаунт";
+"ADD_SERVER" = "Добавить сервер";
+"ACCOUNT_NAME" = "Имя учетной записи";
+"ACCOUNT_NAME_PLACEHOLDER" = "Имя учетной записи";
+"ADDRESS_BOOK" = "Контактная книга";
+"ADD_CONTACT" = "Добавить контакт";
+"ADDRESS" = "Уличный адрес";
+"ADDRESS_COPIED" = "Адрес скопирован.";
+"AMOUNT" = "количество";
+"ACCOUNTS" = "Аккаунты";
+"ACCOUNT_NOT_ENOUGHT_MONEY" = "Недостаточно средств";
+"ACCOUNT" = "Аккаунт";
+"ADD" = "Добавить";
+"ADD_COSIGNATORY" = "добавить получателя";
+"ADD_ADITIONAL_SIGNER" = "Добавить дополнительного получателя";
+"ACCOUNT_HISTORY" = "История аккаунта";
+"ABOUT" = "на";
+
+// MARK: - B
+
+"BASE" = "Найти больше";
+"BLOCK" = "Блок";
+"BALANCE" = "Баланс";
+"BUILD" = "версия";
+
+// MARK: - C
+
+"CHANGE" = "Чтобы изменить";
+"CREATE_NEW" = "Создать новый";
+"CREATE_NEW_ACCCOUNT" = "Создать новую учетную запись";
+"CREATE_PASSWORD" = "Создать пароль";
+"CHANGE_SERVER" = "Изменить сервер";
+"CHANGE_CONTACT" = "Изменить контакт";
+"COPY" = "копия";
+"COULD_NOT_DECRYPT" = "Невозможно расшифровать!";
+"CONFIRM" = "подтвердить";
+"COPY_ADDRESS" = "Копировать адрес";
+"CREATE" = "создать";
+"CANCEL" = "отменить";
+"CONTACTS_IS_UNAVAILABLE" = "Контакты недоступны.\nЧтобы включить использование контактов, перейдите к: \nПараметры -> Конфиденциальность -> Контакты.";
+"COPIED" = "скопированный";
+"CANNOT_ACCESS_CONTACTS" = "Не удалось получить доступ к контактам, разрешите доступ к контактам.";
+ｓ
+// MARK: - D
+
+"DONE" = "Feito!";
+"DELETE" = "Deletar";
+"DELETE_CONFIRMATION_MASSAGE_ADDRESSBOOK" = "Вы уверены, что хотите удалить %@ от ваших контактов?"; // %@ будет заменено именем контакта
+"DELETE_CONFIRMATION_MASSAGE_ACCOUNTS" = "Вы уверены, что хотите удалить %@ ваших аккаунтов?"; // %@ будет заменено именем учетной записи
+"DELETE_CONFIRMATION_MASSAGE_SERVERS" = "Вы уверены, что хотите удалить %@ из списка серверов?"; // %@ будет заменен адресом сервера
+"DELEGATED_HARVESTING" = "Сбор урожая делегатом";
+"DELEGATED_KEY" = "Делегированный ключ";
+
+// MARK: - E
+
+"EDIT" = "редактировать";
+"ENTET_PASSWORD" = "Введите пароль";
+"ENTET_PASSWORD_EXPORT" = "Введите новый пароль или нажмите «Подтвердить», чтобы использовать приложение по умолчанию";
+"ENCRYPTED_MESSAGE" = "Зашифрованное сообщение";
+"EMPTY_MESSAGE" = "Пустое сообщение";
+"ENTER_MESSAGE" = "Введите сообщение здесь";
+"ENTER_NAME" = "Введите имя";
+"ENTER_ADDRESS" = "Введите адрес:";
+"ENTER_AMOUNT" = "Введите количество";
+"ENTER_FEE" = "Введите курс";
+"EXPORT_ACCOUNT" = "Экспортный счет";
+
+// MARK: - F
+
+"FIELDS_EMPTY_ERROR" = "Заполните все поля";
+"FIRST_NAME" = "Имя";
+"FEE" = "скорость";
+"FROM" = "из:";
+"FIELDS_EMPTY_ERROR" = "Заполните все поля";
+"FAILURE_MULTISIG_ACCOUNT_CANNOT_BE_COSIGNER" = "Учет нескольких грузополучателей не может быть грузополучателем сам по себе.";
+
+// MARK: - G
+
+"GENERAL" = "общий";
+
+// MARK: - H
+
+"HARVEST_DETAILS" = "Детали урожая";
+"HOURS_SHORT" = "h";
+"HOURS" = "часов";
+"HIDE_PRIVATE_KEY" = "Скрыть закрытый ключ";
+
+// MARK: - I
+
+"INVOICE" = "счет";
+"INVOICE_MESSAGE_CONFIG" = "Сообщение о счете";
+"IMPORT_KEY" = "Импорт ключа";
+"IMPORT_FROM_KEY" = "Введите закрытый ключ";
+"INFO" = "информация";
+"INVOICE_HEADER" = "Сканируйте этот QR, чтобы произвести оплату";
+"INVOICE_DATA" = "Сведения о счете";
+"INPUT_NEW_ACCOUNT_NAME" = "введите имя учетной записи";
+"INPUT_PUBLIC_KEY" = "Введите адрес";
+
+// MARK: - L
+
+"LANGUAGE" = "язык";
+"LAST_NAME" = "Фамилия";
+"LOST_CONNECTION" = "Потерянное соединение";
+"LOCKED" = "блокированный";
+"LAST_HARVESTED_BLOCK" = "последний %d последний(s) собранный(s)"; // %d будет заменено числом блоков
+
+// MARK: - M
+
+"MORE" = "Маис";
+"MAP" = "карта";
+"MESSAGES" = "панель";
+"MESSAGE" = "панельпанель";
+"MIN" = "панель";
+"MINUTES" = "минут";
+"MESSAGE_LENGTH" = "Сообщение слишком длинное";
+"MY_ADDRESS" = "Мой адрес";
+"MY_NAME" = "Мое имя";
+"MY_INFO" = "Моя информация";
+"MULTISIG" = "Многосторонний грузополучатель";
+"MULTISIG_REMOVE_COUNT_ERROR" = "Вы можете удалить только одного получателя за транзакцию.";
+"MULTISIG_COSIGNATORIES_COUNT_ERROR" = "Многие получатели!";
+"MULTISIG_CHANGES_CONFIRMATION" = "Пожалуйста, подтвердите: это будет стоить вам %@ XEM, и изменения минимального количества получателей, дополнительно будет взиматься дополнительно 6 дополнительных XEM."; // %@ will be replaced by the transaction fee
+"MINUTES_SHORT" = "min";
+"MIN_COSIG_PLACEHOLDER" = "Минимальное количество получателей, измененное для: %@"; // %@ will be replaced by min csig value
+"MIN_COSIG_PLACEHOLDER_CHANGED" = "Минимальное количество получателей, измененное для: %@"; // %@ will be replaced by min cosig value
+
+// MARK: - N
+
+"NONE" = "нет";
+"NO_ACCOUNTS" = "Нет аккаунтов";
+"NOTIFICATION" = "уведомление";
+"NAME" = "имя";
+"NO_INTERNET_CONNECTION" = "Нет подключения к интернету";
+"NOT_A_HEX_STRING" = "Сообщение Hexa может содержать только шестнадцатеричные символы.";
+"NO_PUBLIC_KEY_FOR_ENC" = "Открытый ключ этой учетной записи неизвестен.\nПропущенные сообщения невозможны до завершения транзакции.";
+"NEW" = "новый";
+"NEVER" = "когда-либо";
+"NEW_TRANSACTION" = "Новая транзакция";
+"NOT_ENOUGHT_MONEY" = "Недостаточно средств";
+"NEW_INVOICE" = "Новый счет-фактура";
+"NO_HARVESTED_BLOCK" = "Нет блоков, собранных";
+"NO_PUBLICKEY" = "Нет открытого ключа";
+"NO" = "Не делать";
+"NO_FACEBOOK_ACCOUNT" = "Пожалуйста, добавьте учетную запись Facebook в параметры.";
+"NO_TWITTER_ACCOUNT" = "Добавьте учетную запись Twitter в параметры.";
+"NO_MAIL_ACCOUNT" = "Пожалуйста, добавьте учетную запись электронной почты в свой почтовый клиент.";
+"NO_RESPONCE_FROM_SERVER" = "Нет ответа от сервера";
+"NO_PRIMARY_SERVER" = "Нет основного сервера!";
+"NO_NOTIFICATIONS" = "Нет новых транзакций для%@"; // %@ will be replaced by the account name
+"NOTIFICATION_MESSAGE" = "%d новый сделка за счет %@"; // %@ will be replaced by the account name , %d will be replaced by the transactions count
+
+// MARK: - O
+
+"ON" = "соединенный"; // context is Touch ID setting (On/Off)
+"OK" = "OK";
+"OF" = "из"; // example usage is: 5 "of" 10 signatures
+"OFF" = "от"; // context is Touch ID setting (On/Off)
+"OLD_PASSWORD_PLACEHOLDER" = "Введите предыдущий пароль";
+
+// MARK: - P
+
+"PASSWORD" = "пароль";
+"PASSWORD_CHANGE_CONFIG" = "Изменить пароль";
+"PASSWORD_PLACEHOLDER" = "пароль";
+"PASSWORD_PLACEHOLDER_EXPORT" = "Текущий пароль приложения";
+"PASSOWORD_DIFERENCE_ERROR" = "Пароли не совпадают";
+"PASSOWORD_LENGTH_ERROR" = "Ваш пароль должен содержать не менее 6 символов.";
+"PRIVATE_KEY" = "Закрытый ключ";
+"PUBLIC_KEY" = "Открытый ключ";
+"PRIVATE_KEY_ERROR_1." = "Недействительный закрытый ключ.\nПожалуйста, проверьте его.";
+"PREFIX" = "префикс";
+"POSTFIX" = "Фиксированная почта";
+"POI" = "POI";
+"PRIMARY_ACCOUNT" = "Первичная учетная запись";
+"PRIVATE_KEY_SECURITY_WARNING_PART_ONE" = "Важно понимать, что закрытый ключ является самой важной и конфиденциальной информацией в вашем аккаунте.\n\nЛюбой, кто имеет знания вашего личного ключа,";
+"PRIVATE_KEY_SECURITY_WARNING_PART_TWO" = "полный контроль над связанными фондами и инвестициями в этот счет.";
+"PRIVATE_KEY_SECURITY_WARNING_PART_THREE" = "\n\n Чтобы восстановить свою учетную запись, проверенный ключ - единственный способ. Поэтому никогда не теряйте его, а также";
+"PRIVATE_KEY_SECURITY_WARNING_PART_FOUR" = "держи ее СЕКРЕТ.";
+
+// MARK: - Q
+
+"QR" = "QR";
+"QR_SAVED" = "QR код сохраняется.";
+
+// MARK: - R
+
+"REPEAT_PASSWORD" = "Повторить пароль";
+"REPEAT_PASSWORD_PLACEHOLDER" = "Повторить пароль";
+"REMIND_LATER" = "Напомнить позже";
+"RESET" = "сброс";
+
+// MARK: - S
+
+"SETTINGS" = "настройки";
+"SET_CONFIGURATION" = "";
+"SECURITY" = "безопасность";
+"SERVER_SETTINGS" = "Параметры сервера";
+"SERVER" = "сервер";
+"SCAN_QR" = "сканирование QR";
+"SCAN_QR_CODE" = "Код сканирования QR";
+"SERVER_UNAVAILABLE" = "Сервер выключен. Повторите попытку позже или проверьте свой сервер.";
+"SHOW_TRANSACTIONS" = "Показать транзакции";
+"SEND" = "послать";
+"SIGNERS" = "грузополучатели";
+"SHARE_QR" = "доля QR";
+"SHARE_ADDRESS" = "Поделиться адресом";
+"SAVE" = "экономить";
+"SAVE_CHANGES" = "Сохранить изменения";
+"SOCIAL_NEM_HEADER" = "Клиент NEM для iOS";
+"SEND_MESSAGE" = "Отправить сообщение";
+"SHOW_CHANGES" = "Показать изменения";
+"SHOW_PRIVATE_KEY" = "Показать закрытый ключ";
+"SWITCH_ACCOUNT" = "Обменный счет";
+"SAVE_QR" = "экономить QR";
+
+// MARK: - T
+
+"TOUCH_ID" = "ID de toque";
+"TRANSACTION_ANOUNCE_SUCCESS" = "Транзакция отправлена!";
+"TRANSACTION_ANOUNCE_FAILED" = "Транзакция отклоняется.\nПовторите попытку позже или проверьте подключение к серверу.";
+"TO" = "в";
+
+// MARK: - U
+
+"UPDATE_INTERVAL" = "Интервал обновления";
+"UNCONFIRMED_TRANSACTIONS_DETECTED" = "У вас есть транзакции, которые необходимо подписать!";
+"UNLOCKED" = "разблокирована";
+
+// MARK: - V
+
+"VALIDATION" = "проверка достоверности";
+"VASTED_BALANCE" = "Инвестированный баланс";
+"VIDATION_ACCOUNT_EXIST" = "Учетная запись с этим закрытым ключом существует с именем: %@"; // %@ will be replaced by account name
+"VALIDAATION_MESSAGE_LEANGTH" = "Сообщение слишком длинное";
+"VIEW_PRIVATE_KEY" = "Просмотреть закрытый ключ";
+"VERSION" = "версия";
+
+// MARK: - Y
+
+"YOUR_POSITION" = "Вы здесь";
+"YOUR_NAME" = "Ваше имя";
+
+// MARK: - W
+
+"WARNING" = "внимание:";
+"WRONG_QR_VERSION" = "Неверная версия QR-код";
+"WRONG_OLD_PASSWORD" = "Неверный пароль";
